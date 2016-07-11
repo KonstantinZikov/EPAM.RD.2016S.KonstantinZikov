@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Exercise2;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Exercise2Tests
 {
@@ -13,6 +13,7 @@ namespace Exercise2Tests
             // Arrange
             // Act
             var result = FibonacciEnumeratorCreator.GetEnumerator();
+
             // Assert
             Assert.IsNotNull(result);
         }

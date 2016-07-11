@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Exercise2
 {
@@ -11,6 +8,7 @@ namespace Exercise2
     {
         private int current = 1;
         private int last = 0;
+
         public int Current
         {
             get
@@ -27,7 +25,9 @@ namespace Exercise2
             }
         }
 
-        public void Dispose(){}
+        public void Dispose()
+        {
+        }
 
         public bool MoveNext()
         {

@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Exercise2;
+﻿using Exercise2;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Exercise2Tests
 {
@@ -11,8 +11,10 @@ namespace Exercise2Tests
         {
             // Arrange
             var enumerator = FibonacciEnumeratorCreator.GetEnumerator();
+
             // Act
             int current = enumerator.Current;
+
             // Assert
             Assert.AreEqual(0, current);
         }
@@ -23,8 +25,10 @@ namespace Exercise2Tests
             // Arrange
             var enumerator = FibonacciEnumeratorCreator.GetEnumerator();
             enumerator.MoveNext();
+
             // Act
             int current = enumerator.Current;
+
             // Assert
             Assert.AreEqual(1, current);
         }
@@ -35,6 +39,7 @@ namespace Exercise2Tests
             // Arrange
             var enumerator = FibonacciEnumeratorCreator.GetEnumerator();
             enumerator.MoveNext();
+
             // Act
             int last = 0;
             int current = 0;
@@ -45,6 +50,7 @@ namespace Exercise2Tests
                 last = current;
                 enumerator.MoveNext();
                 current = enumerator.Current;
+
                 // Assert
                 Assert.AreEqual(sum, current);
             }                    

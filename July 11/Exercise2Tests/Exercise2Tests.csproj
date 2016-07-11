@@ -53,7 +53,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FibonacciEnumeratorCreatorTests.cs" />
-    <Compile Include="FibonacciEnumeratorTests.cs" />
+    <Compile Include="FibonacciEnumeratorTests.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
