@@ -7,8 +7,7 @@ namespace RepositoryInterfaces
     public interface IUserRepository
     {
         int Add(User user);
-        List<int> SearchForUsers(Func<User>[] criteria);
+        IEnumerable<int> SearchForUsers(Func<User,bool>[] criteria);
         void Delete(User user);
-        void Delete(int id);
     }
 }

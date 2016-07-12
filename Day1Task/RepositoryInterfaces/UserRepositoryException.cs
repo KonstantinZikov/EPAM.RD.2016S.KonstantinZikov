@@ -2,7 +2,7 @@
 
 namespace RepositoryInterfaces
 {
-    class UserRepositoryException : Exception
+    public class UserRepositoryException : Exception
     {
         public UserRepositoryException() : base() { }
         public UserRepositoryException(string message) : base(message) { }

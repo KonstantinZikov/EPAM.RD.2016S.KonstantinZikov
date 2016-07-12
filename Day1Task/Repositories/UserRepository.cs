@@ -29,7 +29,7 @@ namespace Repositories
             throw new NotImplementedException();
         }
 
-        public List<int> SearchForUsers(Func<User>[] criteria)
+        public List<int> SearchForUsers(Func<User,bool>[] criteria)
         {
             throw new NotImplementedException();
         }
