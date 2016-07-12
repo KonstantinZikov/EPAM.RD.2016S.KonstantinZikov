@@ -11,7 +11,19 @@ namespace RepositoriesTests
     public class UserValidatorTests
     {
         private readonly UserValidator validator 
-            = new UserValidator(new Regex("d+"), new DateTime(2017,1,1));
+            = new UserValidator(new DateTime(2017,1,1), @"\d+");
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void Validate_Null_ValidationException()
+        {
+            // Arrange is skipped
+            // Act
+            validator.Validate(null);
+
+            // Assert is handled by exception
+        }
+
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
@@ -96,6 +108,25 @@ namespace RepositoriesTests
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Gender = Gender.Male,
                 PersonalId = "1",
+            };
+
+            // Act
+            validator.Validate(user);
+
+            // Assert is handled by exception
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ValidationException))]
+        public void Validate_UserWithNullPersonalId_ValidationException()
+        {
+            // Arrange
+            var user = new User()
+            {
+                FirstName = "Vasya",
+                LastName = "Pupkin",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                Gender = Gender.Male,
             };
 
             // Act
