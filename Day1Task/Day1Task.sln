@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryInterfaces", "Rep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{D5107FAB-58CE-4F7C-96D6-CE7BD97A3701}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesTests", "EntitiesTests\EntitiesTests.csproj", "{B1CC1657-F0CD-41F7-A09D-48511AAEA5CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D5107FAB-58CE-4F7C-96D6-CE7BD97A3701}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5107FAB-58CE-4F7C-96D6-CE7BD97A3701}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5107FAB-58CE-4F7C-96D6-CE7BD97A3701}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1CC1657-F0CD-41F7-A09D-48511AAEA5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1CC1657-F0CD-41F7-A09D-48511AAEA5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1CC1657-F0CD-41F7-A09D-48511AAEA5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1CC1657-F0CD-41F7-A09D-48511AAEA5CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

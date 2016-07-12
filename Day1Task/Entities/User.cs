@@ -42,7 +42,16 @@ namespace Entities
         }
 
         public override int GetHashCode()
-            => FirstName.GetHashCode() ^ LastName.GetHashCode();
+        {
+            var firstPart = 0;
+            var secondPart = 0;
+            if (FirstName != null)
+                firstPart = FirstName.GetHashCode();
+            if (LastName != null)
+                secondPart = LastName.GetHashCode();
+            return firstPart ^ secondPart;
+        }
+            
 
     }
 }
