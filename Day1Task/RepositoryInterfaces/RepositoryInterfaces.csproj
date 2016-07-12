@@ -43,6 +43,7 @@
     <Compile Include="IUserValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IUserRepository.cs" />
+    <Compile Include="UserRepositoryException.cs" />
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>

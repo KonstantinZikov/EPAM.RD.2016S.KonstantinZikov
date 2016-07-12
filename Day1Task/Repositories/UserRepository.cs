@@ -7,6 +7,13 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
+
+        public UserRepository(IUserValidator validator, IEnumerator<int> idGenerator)
+        {
+
+        }
+
+
         public int Add(User user)
         {
             throw new NotImplementedException();
