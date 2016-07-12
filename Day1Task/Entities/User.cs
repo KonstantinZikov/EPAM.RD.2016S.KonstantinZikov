@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Entities
+{
+    public class User
+    {
+        public User()
+        {
+            VisaRecords = new List<VisaRecord>();
+        }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string PersonalId { get; set; }
+        public Gender Gender { get; set; }
+        public List<VisaRecord> VisaRecords { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            var comparing = obj as User;
+            if (comparing == null)
+            {
+                return false;
+            }
+            return Equals(comparing);
+        }
+
+        public bool Equals(User user)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+            if (FirstName == user.FirstName &&
+                LastName == user.LastName)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+            => FirstName.GetHashCode() ^ LastName.GetHashCode();
+
+    }
+}
