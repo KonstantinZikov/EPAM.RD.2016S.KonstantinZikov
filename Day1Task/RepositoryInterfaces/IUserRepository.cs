@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RepositoryInterfaces
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         int Add(User user);
         List<int> SearchForUsers(Func<User>[] criteria);

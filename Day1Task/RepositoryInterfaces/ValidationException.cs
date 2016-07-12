@@ -2,7 +2,7 @@
 
 namespace RepositoryInterfaces
 {
-    class ValidationException : Exception
+    public class ValidationException : Exception
     {
         public ValidationException() : base() { }
         public ValidationException(string message) : base(message) { }
