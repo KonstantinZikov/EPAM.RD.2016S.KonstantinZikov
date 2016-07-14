@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{40D82080-CBFD-4010-9312-08063DE72A7D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{AE89CC4D-2188-44C2-A922-08004A605A0D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Repositories</RootNamespace>
-    <AssemblyName>Repositories</AssemblyName>
+    <RootNamespace>Application</RootNamespace>
+    <AssemblyName>Application</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,20 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserRepository.cs" />
+    <Compile Include="Configs\FileElement.cs" />
+    <Compile Include="Configs\FileNamesConfigSection.cs" />
+    <Compile Include="Configs\FilesCollection.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserRepositoryInfo.cs" />
-    <Compile Include="UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entities\Entities.csproj">
-      <Project>{d5107fab-58ce-4f7c-96d6-ce7bd97a3701}</Project>
-      <Name>Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj">
-      <Project>{774f0bb1-3076-45b5-a74f-358509b31aff}</Project>
-      <Name>RepositoryInterfaces</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

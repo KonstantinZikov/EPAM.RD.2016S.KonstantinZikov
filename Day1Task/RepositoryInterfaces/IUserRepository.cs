@@ -1,13 +1,13 @@
 ﻿using Entities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace RepositoryInterfaces
 {
     public interface IUserRepository
     {
         int Add(User user);
-        IEnumerable<int> SearchForUsers(Func<User,bool>[] criteria);
+        IQueryable<User> SearchForUsers(Func<User,bool>[] criteria);
         void Delete(User user);
     }
 }

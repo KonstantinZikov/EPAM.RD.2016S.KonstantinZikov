@@ -2,17 +2,11 @@
 
 namespace Entities
 {
+    [Serializable]
     public struct VisaRecord
     {
-        public VisaRecord(string country, DateTime starts, DateTime ends)
-        {
-            Country = country;
-            Starts = starts;
-            Ends = ends;
-        }
-
-        public string Country { get; private set; }
-        public DateTime Starts { get; private set; }
-        public DateTime Ends { get; private set; }
+        public string Country { get; set; }
+        public DateTime Starts { get; set; }
+        public DateTime Ends { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace IdGenerators
     public class FibonacciEnumerator : IEnumerator<int>
     {
         private int current = 1;
-        private int last = 0;
+        private int last = 1;
 
         public int Current
         {

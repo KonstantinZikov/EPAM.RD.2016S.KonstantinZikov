@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoriesTests", "Reposi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdGenerators", "IdGenerators\IdGenerators.csproj", "{8487EDA5-93A6-414A-83EC-B40E8C2C596D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{AE89CC4D-2188-44C2-A922-08004A605A0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInterfaces", "ServiceInterfaces\ServiceInterfaces.csproj", "{DEDB0A75-3BD7-4211-947D-9292D8D4CCBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{8487EDA5-93A6-414A-83EC-B40E8C2C596D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8487EDA5-93A6-414A-83EC-B40E8C2C596D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8487EDA5-93A6-414A-83EC-B40E8C2C596D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE89CC4D-2188-44C2-A922-08004A605A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE89CC4D-2188-44C2-A922-08004A605A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE89CC4D-2188-44C2-A922-08004A605A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE89CC4D-2188-44C2-A922-08004A605A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEDB0A75-3BD7-4211-947D-9292D8D4CCBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEDB0A75-3BD7-4211-947D-9292D8D4CCBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEDB0A75-3BD7-4211-947D-9292D8D4CCBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEDB0A75-3BD7-4211-947D-9292D8D4CCBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
