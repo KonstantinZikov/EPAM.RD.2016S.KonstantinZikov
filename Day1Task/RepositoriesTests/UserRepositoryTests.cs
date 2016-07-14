@@ -157,7 +157,7 @@ namespace RepositoriesTests
             var repository = CreateRepository();
 
             // Act
-            var result = repository.SearchForUsers(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -182,7 +182,7 @@ namespace RepositoriesTests
             repository.Add(user);
 
             // Act
-            var result = repository.SearchForUsers(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -217,7 +217,7 @@ namespace RepositoriesTests
             repository.Add(user2);
 
             // Act
-            var result = repository.SearchForUsers(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] {
                 (u) => u.FirstName == "Vasya",
                 (u) => u.LastName == "Pupkin"
             }).ToList();
@@ -266,7 +266,7 @@ namespace RepositoriesTests
             // Act
             repository.Add(user);
             repository.Delete(user);
-            var result = repository.SearchForUsers(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -293,7 +293,7 @@ namespace RepositoriesTests
             repository.Add(user);
             repository.Delete(user);
             repository.Add(user);
-            var result = repository.SearchForUsers(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -335,8 +335,8 @@ namespace RepositoriesTests
                 repository.SaveToXml(stream);
                 stream.Position = 0;
                 repository.RestoreFromXml(stream);
-                var restored1 = repository.SearchForUsers((u) => u.FirstName == firstName1).ToList();
-                var restored2 = repository.SearchForUsers((u) => u.FirstName == firstName2).ToList();
+                var restored1 = repository.Search((u) => u.FirstName == firstName1).ToList();
+                var restored2 = repository.Search((u) => u.FirstName == firstName2).ToList();
                 // Assert        
                 Assert.AreEqual(1, restored1.Count);   
                 Assert.AreEqual(user1, restored1[0]);
