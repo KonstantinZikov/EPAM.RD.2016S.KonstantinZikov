@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Services
 {
-    class ReplicationUserServiceSystem : IUserService
+    public class ReplicationUserServiceSystem : IUserService
     {
         private readonly IUserRepository _repository;
         private readonly IUserServiceDistributer _distributor;

@@ -1,6 +1,7 @@
 ﻿using Entities;
 using RepositoryInterfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ServicesTests
@@ -25,7 +26,7 @@ namespace ServicesTests
         public IQueryable<User> Search(params Func<User, bool>[] criterias)
         {
             SearchedCount++;
-            return null;
+            return new List<User>().AsQueryable();
         }
     }
 }

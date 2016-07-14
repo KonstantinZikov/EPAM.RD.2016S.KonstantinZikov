@@ -10,12 +10,12 @@ namespace ServicesTests
 
         public void RestoreFromXml(Stream readStream)
         {
-            Saved = true;
+            Restored = true;
         }
 
         public void SaveToXml(Stream writeStream)
         {
-            Restored = true;
+            Saved = true;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Services
 {
-    class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
         private readonly IXmlStorableRepository _storableRepository;

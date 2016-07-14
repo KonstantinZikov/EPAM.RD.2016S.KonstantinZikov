@@ -108,7 +108,6 @@ namespace ServicesTests
             // Assert is handled by exception
         }
 
-        //TODO+++++++++++++++++++++++++++++++++++++++++++++
         [TestMethod]
         [ExpectedException(typeof(UserServiceException))]
         public void RestoreFromXml_NotXmlStorableRepository_UserServiceException()
@@ -118,7 +117,7 @@ namespace ServicesTests
             var service = GetService(repo);
 
             // Act
-            service.SaveToXml(null);
+            service.RestoreFromXml(null);
 
             // Assert is handled by exception
         }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Services
 {
-    class DefaultUserServiceDistributor : IUserServiceDistributer
+    public class DefaultUserServiceDistributor : IUserServiceDistributer
     {
         private IUserService _master;
         private List<IUserService> _slaves;
