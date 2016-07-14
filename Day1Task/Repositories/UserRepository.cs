@@ -75,7 +75,7 @@ namespace Repositories
             }           
         }
 
-        public IQueryable<User> SearchForUsers(Func<User,bool>[] criterias)
+        public IQueryable<User> SearchForUsers(params Func<User,bool>[] criterias)
         {
             var result = _list.Where((u) =>
             {

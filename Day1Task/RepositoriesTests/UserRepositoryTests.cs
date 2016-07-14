@@ -6,6 +6,7 @@ using Entities;
 using RepositoryInterfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace RepositoriesTests
 {
@@ -300,6 +301,48 @@ namespace RepositoriesTests
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(user, result[0]);
+        }
+
+        [TestMethod]
+        public void SaveToXml_RepositoryWithSomeUsers_RestoresCorrectly()
+        {
+            // Arrange
+            var firstName1 = "Vasya";
+            var firstName2 = "Petya";
+            using (var stream = new MemoryStream())
+            {
+                var repository = CreateRepository();
+                var user1 = new User()
+                {
+                    FirstName = firstName1,
+                    LastName = "Pupkin",
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    Gender = Gender.Male,
+                    PersonalId = "1"
+                };
+                var user2 = new User()
+                {
+                    FirstName = firstName2,
+                    LastName = "Pupkin",
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    Gender = Gender.Male,
+                    PersonalId = "2"
+                };
+                repository.Add(user1);
+                repository.Add(user2);
+
+                // Act
+                repository.SaveToXml(stream);
+                stream.Position = 0;
+                repository.RestoreFromXml(stream);
+                var restored1 = repository.SearchForUsers((u) => u.FirstName == firstName1).ToList();
+                var restored2 = repository.SearchForUsers((u) => u.FirstName == firstName2).ToList();
+                // Assert        
+                Assert.AreEqual(1, restored1.Count);   
+                Assert.AreEqual(user1, restored1[0]);
+                Assert.AreEqual(1, restored2.Count);
+                Assert.AreEqual(user2, restored2[0]);
+            }           
         }
     }
 }
