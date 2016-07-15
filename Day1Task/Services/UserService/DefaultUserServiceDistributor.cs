@@ -9,10 +9,10 @@ namespace Services
 {
     public class DefaultUserServiceDistributor : IUserServiceDistributer
     {
-        private IUserService _master;
-        private List<IUserService> _slaves;
-        private int slaveCounter;
-        private int slaveCount;
+        protected IUserService _master;
+        protected List<IUserService> _slaves;
+        protected int slaveCounter;
+        protected int slaveCount;
 
         public IUserService Master
         {
@@ -30,13 +30,13 @@ namespace Services
             }
         }
 
-        public int Add(User user)
+        public virtual int Add(User user)
             => _master.Add(user);
 
-        public void Delete(User user)
+        public virtual void Delete(User user)
             => _master.Delete(user);
 
-        public List<User> Search(params Func<User, bool>[] criterias)
+        public virtual List<User> Search(params Func<User, bool>[] criterias)
         {
             if (slaveCount == 0)
             {
@@ -47,10 +47,10 @@ namespace Services
             return result;
         }
 
-        public void RestoreFromXml(Stream readStream)
+        public virtual void RestoreFromXml(Stream readStream)
             => _master.RestoreFromXml(readStream);
 
-        public void SaveToXml(Stream writeStream)
+        public virtual void SaveToXml(Stream writeStream)
             => _master.SaveToXml(writeStream);       
     }
 }
