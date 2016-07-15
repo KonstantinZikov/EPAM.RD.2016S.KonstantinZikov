@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\ReplicationElement.cs" />
     <Compile Include="Configs\FileElement.cs" />
+    <Compile Include="Configs\ServicesConfigSection.cs" />
     <Compile Include="Configs\FileNamesConfigSection.cs" />
     <Compile Include="Configs\FilesCollection.cs" />
     <Compile Include="Program.cs" />
