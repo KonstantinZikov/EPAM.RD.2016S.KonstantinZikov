@@ -21,7 +21,7 @@ namespace DoSomethingClient
 
             // DONE: Find first type that has DoSomething attribute and implements IDoSomething.
             var type = types.First((t) => 
-                (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomething")!= null ) && 
+                (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomethingAttribute")!= null ) && 
                 (t.GetInterfaces().FirstOrDefault((i)=>i.Name == "IDoSomething") != null));
 
             // DONE: Create an instance of this type.
@@ -45,7 +45,7 @@ namespace DoSomethingClient
 
             // TODO: Find first type that has DoSomething attribute and don't implement IDoSomething.
             var type = types.First((t) =>
-                (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomething") != null) &&
+                (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomethingAttribute") != null) &&
                 (t.GetInterfaces().FirstOrDefault((i) => i.Name == "IDoSomething") == null));
             // TODO: MethodInfo mi = type.GetMethod("DoSomething");
             var obj = Activator.CreateInstance(type);
@@ -65,7 +65,7 @@ namespace DoSomethingClient
 
             // TODO: Find first type that has DoSomething attribute and implements IDoSomething.
             var type = types.First((t) =>
-               (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomething") != null) &&
+               (t.CustomAttributes.FirstOrDefault((a) => a.AttributeType.Name == "DoSomethingAttribute") != null) &&
                (t.GetInterfaces().FirstOrDefault((i) => i.Name == "IDoSomething") != null));
 
             // TODO: Create an instance of this type.
