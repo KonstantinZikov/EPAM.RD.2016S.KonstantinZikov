@@ -1,4 +1,1 @@
-﻿TODO:
-	master-slaves signals.
-	application.
-	many repositpries for many services.
+﻿

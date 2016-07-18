@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Configs
+namespace Configuration
 {
     public class FileNamesConfigSection : ConfigurationSection
     {

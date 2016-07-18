@@ -1,5 +1,4 @@
-﻿using Configs;
-using Ninject.Extensions.Factory;
+﻿using Ninject.Extensions.Factory;
 using Ninject.Modules;
 using Repositories;
 using RepositoryInterfaces;
@@ -9,7 +8,7 @@ using System;
 using System.Configuration;
 using Utils;
 
-namespace Application
+namespace Configuration
 {
     public class ConfigurationModule : NinjectModule
     {

@@ -2,6 +2,7 @@
 using Ninject;
 using ServiceInterfaces;
 using Entities;
+using Configuration;
 
 namespace Application
 {
