@@ -11,7 +11,7 @@ namespace Configuration
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((FileElement)element).FolderType;
+            return ((FileElement)element).Name;
         }
 
         public FileElement this[int idx]

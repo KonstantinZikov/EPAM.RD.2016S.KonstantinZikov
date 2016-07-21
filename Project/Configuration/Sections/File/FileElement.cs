@@ -4,7 +4,7 @@ namespace Configuration
 {
     public class FileElement : ConfigurationElement
     {
-        [ConfigurationProperty("type", DefaultValue = "", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("type", DefaultValue = "", IsKey = false, IsRequired = true)]
         public string FolderType
         {
             get { return (string)(base["type"]); }
@@ -18,7 +18,7 @@ namespace Configuration
             set { base["path"] = value; }
         }
 
-        [ConfigurationProperty("name", DefaultValue = "", IsKey = false, IsRequired = true)]
+        [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
         public string Name
         {
             get { return (string)(base["name"]); }

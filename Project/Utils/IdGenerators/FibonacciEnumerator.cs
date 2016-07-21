@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Utils
 {
-    public class FibonacciEnumerator : IIdGenerator
+    public class FibonacciEnumerator : MarshalByRefObject, IIdGenerator
     {
         private int current = 1;
         private int last = 1;

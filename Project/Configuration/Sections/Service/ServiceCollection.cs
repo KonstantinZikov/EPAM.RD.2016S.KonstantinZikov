@@ -1,0 +1,23 @@
+﻿using System.Configuration;
+
+namespace Configuration
+{
+    [ConfigurationCollection(typeof(RepositoryElement), AddItemName = "Service")]
+    public class ServiceCollection : ConfigurationElementCollection
+    {
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new ServiceElement();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((ServiceElement)element).Id;
+        }
+
+        public ServiceElement this[int idx]
+        {
+            get { return (ServiceElement)BaseGet(idx); }
+        }
+    }
+}

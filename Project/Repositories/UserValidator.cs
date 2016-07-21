@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Repositories
 {
-    public class UserValidator : IUserValidator
+    public class UserValidator : MarshalByRefObject, IUserValidator
     {
         private readonly Regex _personalIdRegex;
         private readonly DateTime _maxBirthDate;

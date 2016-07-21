@@ -10,16 +10,18 @@ using static System.Diagnostics.TraceEventType;
 
 namespace Services
 {
-    public class UserService : IUserService
+    public class UserService : MarshalByRefObject, IUserService
     {
         private readonly IUserRepository _repository;
         private readonly IXmlStorableRepository _storableRepository;
         private readonly ILogger _logger;
         private bool _isXmlStorable;
-       
+        
+        public int Id { get; private set; }
 
-        public UserService(IUserRepository repository, ILogger logger)
+        public UserService(int id,IUserRepository repository, ILogger logger)
         {
+            Id = id;
             if (repository == null)
             {
                 throw new ArgumentNullException

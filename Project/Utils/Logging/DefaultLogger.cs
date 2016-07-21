@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Utils
 {
-    public class DefaultLogger : ILogger
+    public class DefaultLogger : MarshalByRefObject, ILogger
     {
         private readonly TraceSource source;
         private int nextId;

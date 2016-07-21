@@ -26,12 +26,12 @@ namespace Services
                 throw new ArgumentOutOfRangeException
                     (nameof(slaveCount) + "must be greater than 0.");
             }
-
+            int id = 1;
             var slaves = new List<UserService>(slaveCount);
-            _distributer.Master = new UserService(repository,logger);
+            _distributer.Master = new UserService(id++,repository,logger);
             for (int i = 0; i < slaveCount; i++)
             {
-                slaves.Add(new UserService(repository,logger));
+                slaves.Add(new UserService(id++,repository,logger));
             }      
         }
     }

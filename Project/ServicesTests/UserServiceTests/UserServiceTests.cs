@@ -12,7 +12,7 @@ namespace ServicesTests
     {
         protected override IUserService GetService(IUserRepository repository)
         {
-            return new UserService(repository,new DefaultLogger());
+            return new UserService(1,repository,new DefaultLogger());
         }
     }
 }
