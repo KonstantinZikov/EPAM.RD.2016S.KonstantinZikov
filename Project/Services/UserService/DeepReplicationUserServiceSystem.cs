@@ -20,7 +20,7 @@ namespace Services
             _distributer.Master = master;
             _distributer.Slaves = slaves;
             logger.Log(Information,
-                $"Replication service system {GetHashCode()} created successfully.");
+                $"Replication service system {Id} created successfully.");
         }
     }
 }

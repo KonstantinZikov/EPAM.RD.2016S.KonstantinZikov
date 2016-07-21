@@ -15,12 +15,14 @@ namespace Services
         protected List<IUserService> _slaves;
         protected int slaveCounter;
         protected int slaveCount;
+        public int Id { get; private set; }
 
         public DefaultUserServiceDistributor(ILogger logger)
         {
+            Id = GetHashCode();
             _logger = logger;
             logger.Log(System.Diagnostics.TraceEventType.Information,
-                $"UserService distributor {GetHashCode()} created successfully.");
+                $"UserService distributor {Id} created successfully.");
         }
 
         

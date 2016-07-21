@@ -7,6 +7,7 @@ using Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Reflection;
 using Utils;
 
@@ -89,19 +90,27 @@ namespace Configuration
                 LoadAssemblies(domain);
                 var logger = Kernel.GetService(typeof(ILogger));
                 var idGenerator = domain.CreateInstanceAndUnwrap("Utils", "Utils.FibonacciEnumerator");
-                var validator = domain.CreateInstanceAndUnwrap("Repositories","Repositories.UserValidator",new object[0],
-                    BindingFlags.CreateInstance,)
+                var validator = domain.CreateInstanceAndUnwrap("Repositories", "Repositories.UserValidator", true,
+                    BindingFlags.CreateInstance, null, new object[] { new DateTime(2017, 1, 1),".*" },
+                    CultureInfo.CurrentCulture,new object[0]);
+                var repository = domain.CreateInstanceAndUnwrap("Repositories", _userRepositories[service.Repository].FullName, true,
+                    BindingFlags.CreateInstance, null, new object[] { validator, idGenerator },
+                    CultureInfo.CurrentCulture, new object[0]);
 
-               // domain.CreateInstanceAndUnwrap("Services", type.FullName,,);
+                // domain.CreateInstanceAndUnwrap("Services", type.FullName,,);
                 if (service.IsMaster)
                 {
                     if (master != null)
                         throw new ConfigurationErrorsException("Two ore more master-services.");
-                    master = Kernel.GetService(typeof(IUserService)) as IUserService;
+                    master = domain.CreateInstanceAndUnwrap("Services", "Services.UserService", true,
+                    BindingFlags.CreateInstance, null, new object[] { service.Id, repository, logger},
+                    CultureInfo.CurrentCulture, new object[0]) as IUserService;
                 }
                 else
                 {
-                    slaves.Add(Kernel.GetService(typeof(IUserService)) as IUserService);
+                    slaves.Add(domain.CreateInstanceAndUnwrap("Services", "Services.UserService", true,
+                    BindingFlags.CreateInstance, null, new object[] { service.Id, repository, logger },
+                    CultureInfo.CurrentCulture, new object[0]) as IUserService);
                 }
             }
             Rebind<IUserService>().To<DeepReplicationUserServiceSystem>()

@@ -35,19 +35,19 @@ namespace Services
             }
 
             _logger = logger;
-            _logger.Log(Information,$"Service {GetHashCode()} created successfully.");
+            _logger.Log(Information,$"Service {Id} created successfully.");
         }
 
         public int Add(User user)
         {
             try
             {
-                _logger.Log(Information, $"Add user {user} by service {GetHashCode()}.");
+                _logger.Log(Information, $"Add user {user} by service {Id}.");
                 return _repository.Add(user);
             }
             catch (UserRepositoryException ex)
             {
-                string msg = $"An error occured, while adding the user. Service {GetHashCode()}.";
+                string msg = $"An error occured, while adding the user. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
             }
@@ -58,12 +58,12 @@ namespace Services
         {
             try
             {
-                _logger.Log(Information, $"Delete user {user} by service {GetHashCode()}.");
+                _logger.Log(Information, $"Delete user {user} by service {Id}.");
                 _repository.Delete(user);
             }
             catch (UserRepositoryException ex)
             {
-                string msg = $"An error occured, while deleting the user. Service {GetHashCode()}.";
+                string msg = $"An error occured, while deleting the user. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
             }
@@ -74,12 +74,12 @@ namespace Services
         {
             try
             {
-                _logger.Log(Information, $"Search users by service {GetHashCode()}.");
+                _logger.Log(Information, $"Search users by service {Id}.");
                 return _repository.Search(criterias).ToList();
             }
             catch(UserRepositoryException ex)
             {
-                string msg = $"An error occured, while searching the users. Service {GetHashCode()}.";
+                string msg = $"An error occured, while searching the users. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
             }
@@ -88,7 +88,7 @@ namespace Services
 
         public void SaveToXml(Stream writeStream)
         {
-            _logger.Log(Information, $"Save to xml service {GetHashCode()}.");
+            _logger.Log(Information, $"Save to xml service {Id}.");
             if (_isXmlStorable)
             {
                 try
@@ -97,14 +97,14 @@ namespace Services
                 }
                 catch(UserRepositoryException ex)
                 {
-                    string msg = $"An error occured, while saving to xml. Service {GetHashCode()}.";
+                    string msg = $"An error occured, while saving to xml. Service {Id}.";
                     _logger.Log(Error, msg);
                     throw new UserServiceException(msg, ex);
                 }               
             }
             else
             {
-                string msg = $"Internal repository doesn't support saving to xml. Service {GetHashCode()}.";
+                string msg = $"Internal repository doesn't support saving to xml. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg);
             }
@@ -112,7 +112,7 @@ namespace Services
 
         public void RestoreFromXml(Stream readStream)
         {
-            _logger.Log(Information, $"Restore from xml service {GetHashCode()}.");
+            _logger.Log(Information, $"Restore from xml service {Id}.");
             if (_isXmlStorable)
             {
                 try
@@ -121,7 +121,7 @@ namespace Services
                 }
                 catch (UserRepositoryException ex)
                 {
-                    string msg = $"An error occured, while restoring from xml. Service {GetHashCode()}.";
+                    string msg = $"An error occured, while restoring from xml. Service {Id}.";
                     _logger.Log(Error, msg);
                     throw new UserServiceException(msg, ex);
                 }
@@ -129,7 +129,7 @@ namespace Services
             }
             else
             {
-                string msg = $"Internal repository doesn't support restoring from xml. Service {GetHashCode()}.";
+                string msg = $"Internal repository doesn't support restoring from xml. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg);
             }

@@ -12,5 +12,6 @@ namespace ServiceInterfaces
         void Delete(User user);
         void SaveToXml(Stream writeStream);
         void RestoreFromXml(Stream readStream);
+        int Id { get; }
     }
 }

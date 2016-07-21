@@ -21,6 +21,7 @@ namespace Application
                 Gender = Gender.Male,
                 PersonalId = "1"
             });
+            Console.ReadKey();
         }
 
         static void Initialize()

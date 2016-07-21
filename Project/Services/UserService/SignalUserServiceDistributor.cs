@@ -10,12 +10,12 @@ namespace Services
         public override int Add(User user)
         {
             _logger.Log(Information, 
-                $"Distributer send add signal to master service {_master.GetHashCode()}.");
+                $"Distributer send add signal to master service {_master.Id}.");
             int result = _master.Add(user);
             foreach(var slave in _slaves)
             {
                 _logger.Log(Information,
-                $"Distributer send add signal to slave service {slave.GetHashCode()}.");
+                $"Distributer send add signal to slave service {slave.Id}.");
                 slave.Add(user);
             }
             return result;
@@ -25,12 +25,12 @@ namespace Services
         public override void Delete(User user)
         {
             _logger.Log(Information,
-                $"Distributer send delete signal to master service {_master.GetHashCode()}.");
+                $"Distributer send delete signal to master service {_master.Id}.");
             _master.Delete(user);
             foreach (var slave in _slaves)
             {
                 _logger.Log(Information,
-                $"Distributer send delete signal to slave service {slave.GetHashCode()}.");
+                $"Distributer send delete signal to slave service {slave.Id}.");
                 slave.Delete(user);
             }
         }

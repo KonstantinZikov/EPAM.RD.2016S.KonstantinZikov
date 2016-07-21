@@ -9,7 +9,7 @@ using Utils;
 
 namespace Repositories
 {
-    public class UserRepository : IUserRepository, IXmlStorableRepository
+    public class UserRepository : MarshalByRefObject, IUserRepository, IXmlStorableRepository
     {
         private readonly IUserValidator _validator;
         private readonly IEnumerator<int> _idGenerator;

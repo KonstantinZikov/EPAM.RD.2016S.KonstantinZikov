@@ -10,8 +10,11 @@ namespace Services
     {
         protected IUserServiceDistributer _distributer;
 
+        public int Id { get; private set; }
+
         public BaseReplicationUserServiceSystem(IUserServiceDistributer distributer)
         {
+            Id = GetHashCode();
             if (distributer == null)
             {
                 throw new ArgumentNullException
