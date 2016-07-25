@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Net;
 using System.Reflection;
 using Utils;
 
@@ -97,18 +98,19 @@ namespace Configuration
                     BindingFlags.CreateInstance, null, new object[] { validator, idGenerator },
                     CultureInfo.CurrentCulture, new object[0]);
 
-                // domain.CreateInstanceAndUnwrap("Services", type.FullName,,);
                 if (service.IsMaster)
-                {
+                { 
                     if (master != null)
                         throw new ConfigurationErrorsException("Two ore more master-services.");
-                    master = domain.CreateInstanceAndUnwrap("Services", "Services.UserService", true,
-                    BindingFlags.CreateInstance, null, new object[] { service.Id, repository, logger},
+
+                    var ips = new List<IPEndPoint> { new IPEndPoint(IPAddress.Parse("127.0.0.1"),51200) };
+                    master = domain.CreateInstanceAndUnwrap("Services", "Services.MasterUserService", true,
+                    BindingFlags.CreateInstance, null, new object[] { service.Id, ips, repository, logger},
                     CultureInfo.CurrentCulture, new object[0]) as IUserService;
                 }
                 else
                 {
-                    slaves.Add(domain.CreateInstanceAndUnwrap("Services", "Services.UserService", true,
+                    slaves.Add(domain.CreateInstanceAndUnwrap("Services", "Services.SlaveUserService", true,
                     BindingFlags.CreateInstance, null, new object[] { service.Id, repository, logger },
                     CultureInfo.CurrentCulture, new object[0]) as IUserService);
                 }

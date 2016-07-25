@@ -1,3 +1,4 @@
 ﻿2. add network connection between services
 3. add thread-safe
 4. add threads that searches users
+5. add custom serialization
