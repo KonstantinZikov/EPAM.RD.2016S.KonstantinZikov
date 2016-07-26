@@ -9,7 +9,7 @@ using Utils;
 
 namespace Repositories
 {
-    public class UserRepository : MarshalByRefObject, IUserRepository, IXmlStorableRepository
+    public class UserRepository : MarshalByRefObject, IUserRepository, StorableRepository
     {
         private readonly IUserValidator _validator;
         private readonly IEnumerator<int> _idGenerator;
@@ -92,7 +92,7 @@ namespace Repositories
             return result.AsQueryable();
         }
 
-        public void SaveToXml(Stream writeStream)
+        public void Save(Stream writeStream)
         {
             var info = new UserRepositoryInfo()
             {
@@ -102,7 +102,7 @@ namespace Repositories
             };
             try
             {
-                _serializer.Serialize(writeStream, info);
+                Serializer.Serialize(info,writeStream);
             }
             catch (IOException ex)
             {
@@ -112,18 +112,18 @@ namespace Repositories
             catch (InvalidOperationException ex)
             {
                 throw new UserRepositoryException
-                    ("An Xml serialization error" +
+                    ("A serialization error" +
                     "occured while saving repository.", ex);
             }
 
         }
 
-        public void RestoreFromXml(Stream readStream)
+        public void Restore(Stream readStream)
         {
             UserRepositoryInfo info;
             try
             {
-                info = _serializer.Deserialize(readStream) as UserRepositoryInfo;
+                info = Serializer.Deserialize(readStream) as UserRepositoryInfo;
             }
             catch(IOException ex)
             {
@@ -133,7 +133,7 @@ namespace Repositories
             catch (InvalidOperationException ex)
             {
                 throw new UserRepositoryException
-                    ("An Xml serialization error" +
+                    ("A serialization error" +
                     "occured while restoring repository.", ex);
             }
 

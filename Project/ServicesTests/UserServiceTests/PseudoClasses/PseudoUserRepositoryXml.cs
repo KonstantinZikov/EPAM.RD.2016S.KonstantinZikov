@@ -3,17 +3,17 @@ using System.IO;
 
 namespace ServicesTests
 {
-    class PseudoUserRepositoryXml : PseudoUserRepository, IXmlStorableRepository
+    class PseudoUserRepositoryXml : PseudoUserRepository, StorableRepository
     {
         public bool Saved { get; set; }
         public bool Restored { get; set; }
 
-        public void RestoreFromXml(Stream readStream)
+        public void Restore(Stream readStream)
         {
             Restored = true;
         }
 
-        public void SaveToXml(Stream writeStream)
+        public void Save(Stream writeStream)
         {
             Saved = true;
         }

@@ -304,7 +304,7 @@ namespace RepositoriesTests
         }
 
         [TestMethod]
-        public void SaveToXml_RepositoryWithSomeUsers_RestoresCorrectly()
+        public void Save_RepositoryWithSomeUsers_RestoresCorrectly()
         {
             // Arrange
             var firstName1 = "Vasya";
@@ -332,9 +332,9 @@ namespace RepositoriesTests
                 repository.Add(user2);
 
                 // Act
-                repository.SaveToXml(stream);
+                repository.Save(stream);
                 stream.Position = 0;
-                repository.RestoreFromXml(stream);
+                repository.Restore(stream);
                 var restored1 = repository.Search((u) => u.FirstName == firstName1).ToList();
                 var restored2 = repository.Search((u) => u.FirstName == firstName2).ToList();
                 // Assert        

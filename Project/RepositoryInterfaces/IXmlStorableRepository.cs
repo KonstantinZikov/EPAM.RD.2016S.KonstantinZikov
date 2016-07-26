@@ -2,9 +2,9 @@
 
 namespace RepositoryInterfaces
 {
-    public interface IXmlStorableRepository
+    public interface StorableRepository
     {
-        void SaveToXml(Stream writeStream);
-        void RestoreFromXml(Stream readStream);
+        void Save(Stream writeStream);
+        void Restore(Stream readStream);
     }
 }

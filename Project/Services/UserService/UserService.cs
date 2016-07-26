@@ -13,7 +13,7 @@ namespace Services
     public class UserService : MarshalByRefObject, IUserService
     {
         protected readonly IUserRepository _repository;
-        protected readonly IXmlStorableRepository _storableRepository;
+        protected readonly StorableRepository _storableRepository;
         protected readonly ILogger _logger;
         protected bool _isXmlStorable;
         
@@ -28,7 +28,7 @@ namespace Services
                     (nameof(repository) + " is null.");
             }
             _repository = repository;      
-            _storableRepository = repository as IXmlStorableRepository;
+            _storableRepository = repository as StorableRepository;
             if (_storableRepository != null)
             {
                 _isXmlStorable = true;
@@ -93,7 +93,7 @@ namespace Services
             {
                 try
                 {             
-                    _storableRepository.SaveToXml(writeStream);
+                    _storableRepository.Save(writeStream);
                 }
                 catch(UserRepositoryException ex)
                 {
@@ -117,7 +117,7 @@ namespace Services
             {
                 try
                 {
-                    _storableRepository.RestoreFromXml(readStream);
+                    _storableRepository.Restore(readStream);
                 }
                 catch (UserRepositoryException ex)
                 {
