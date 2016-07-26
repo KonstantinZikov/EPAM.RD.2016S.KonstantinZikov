@@ -6,6 +6,7 @@ using RepositoryInterfaces;
 using System.IO;
 using System.Linq;
 using Utils;
+using System.Threading;
 using static System.Diagnostics.TraceEventType;
 
 namespace Services
@@ -16,7 +17,8 @@ namespace Services
         protected readonly StorableRepository _storableRepository;
         protected readonly ILogger _logger;
         protected bool _isXmlStorable;
-        
+        protected ReaderWriterLockSlim _lock;
+
         public int Id { get; private set; }
 
         public UserService(int id,IUserRepository repository, ILogger logger)
@@ -27,6 +29,7 @@ namespace Services
                 throw new ArgumentNullException
                     (nameof(repository) + " is null.");
             }
+            _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
             _repository = repository;      
             _storableRepository = repository as StorableRepository;
             if (_storableRepository != null)
@@ -42,6 +45,7 @@ namespace Services
         {
             try
             {
+                _lock.EnterWriteLock();
                 _logger.Log(Information, $"Add user {user} by service {Id}.");
                 return _repository.Add(user);
             }
@@ -51,6 +55,10 @@ namespace Services
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
             }
+            finally
+            {
+                _lock.ExitWriteLock();
+            }
         }
            
 
@@ -58,6 +66,7 @@ namespace Services
         {
             try
             {
+                _lock.EnterWriteLock();
                 _logger.Log(Information, $"Delete user {user} by service {Id}.");
                 _repository.Delete(user);
             }
@@ -67,6 +76,10 @@ namespace Services
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
             }
+            finally
+            {
+                _lock.ExitWriteLock();
+            }
         }
             
 
@@ -74,7 +87,8 @@ namespace Services
         {
             try
             {
-                _logger.Log(Information, $"Search users by service {Id}.");
+                _lock.EnterReadLock();
+                _logger.Log(Information, $"Search users by service {Id}.");                
                 return _repository.Search(criterias).ToList();
             }
             catch(UserRepositoryException ex)
@@ -82,6 +96,10 @@ namespace Services
                 string msg = $"An error occured, while searching the users. Service {Id}.";
                 _logger.Log(Error, msg);
                 throw new UserServiceException(msg, ex);
+            }
+            finally
+            {
+                _lock.ExitReadLock();
             }
         }
       
@@ -92,7 +110,8 @@ namespace Services
             if (_isXmlStorable)
             {
                 try
-                {             
+                {
+                    _lock.EnterReadLock();       
                     _storableRepository.Save(writeStream);
                 }
                 catch(UserRepositoryException ex)
@@ -100,7 +119,11 @@ namespace Services
                     string msg = $"An error occured, while saving to xml. Service {Id}.";
                     _logger.Log(Error, msg);
                     throw new UserServiceException(msg, ex);
-                }               
+                }   
+                finally
+                {
+                    _lock.ExitReadLock();
+                }            
             }
             else
             {
@@ -117,6 +140,7 @@ namespace Services
             {
                 try
                 {
+                    _lock.EnterWriteLock();
                     _storableRepository.Restore(readStream);
                 }
                 catch (UserRepositoryException ex)
@@ -124,6 +148,10 @@ namespace Services
                     string msg = $"An error occured, while restoring from xml. Service {Id}.";
                     _logger.Log(Error, msg);
                     throw new UserServiceException(msg, ex);
+                }
+                finally
+                {
+                    _lock.ExitWriteLock();
                 }
 
             }
