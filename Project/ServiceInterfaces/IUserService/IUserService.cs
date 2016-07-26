@@ -10,8 +10,8 @@ namespace ServiceInterfaces
         int Add(User user);
         List<User> Search(params Func<User, bool>[] criterias);
         void Delete(User user);
-        void SaveToXml(Stream writeStream);
-        void RestoreFromXml(Stream readStream);
+        void Save(Stream writeStream);
+        void Restore(Stream readStream);
         int Id { get; }
     }
 }

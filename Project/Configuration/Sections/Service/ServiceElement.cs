@@ -31,5 +31,12 @@ namespace Configuration
             get { return (string)(base["repository"]); }
             set { base["repository"] = value; }
         }
+
+        [ConfigurationProperty("port", DefaultValue = "51100", IsKey = false, IsRequired = true)]
+        public int Port
+        {
+            get { return (int)(base["port"]); }
+            set { base["port"] = value; }
+        }
     }
 }

@@ -32,10 +32,10 @@ namespace Services
         public List<User> Search(params Func<User, bool>[] criterias)
             => _distributer.Search(criterias);
 
-        public void SaveToXml(Stream writeStream)
-            => _distributer.SaveToXml(writeStream);
+        public void Save(Stream writeStream)
+            => _distributer.Save(writeStream);
 
-        public void RestoreFromXml(Stream readStream)
-            => _distributer.RestoreFromXml(readStream);
+        public void Restore(Stream readStream)
+            => _distributer.Restore(readStream);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Configuration
 {
-    [ConfigurationCollection(typeof(RepositoryElement), AddItemName = "Service")]
+    [ConfigurationCollection(typeof(ServiceElement), AddItemName = "Service")]
     public class ServiceCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()

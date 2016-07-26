@@ -6,30 +6,24 @@ using Utils;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Json;
+using ServiceInterfaces;
+using System.Text;
 
 namespace Services
 {
-    public class MasterUserService : UserService
+    public class MasterUserService : UserService, IUserService
     {
         private readonly List<IPEndPoint> _endPoints;
+        private readonly List<IPEndPoint> _masterPoints;
         private DataContractJsonSerializer jsonFormatter 
             = new DataContractJsonSerializer(typeof(User));
-        private List<NetworkStream> tcpStreams = new List<NetworkStream>();
-
-
-        public MasterUserService(int id, List<IPEndPoint> endPoints, IUserRepository repository, ILogger logger) 
+        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private bool _conected;
+        public MasterUserService(int id, List<IPEndPoint> slavePoints, List<IPEndPoint> masterPoints, IUserRepository repository, ILogger logger) 
             : base(id, repository, logger)
         {
-            _endPoints = endPoints;
-            foreach (var point in _endPoints)
-            {
-                // Create local point.
-                TcpClient client = new TcpClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 51111));
-                // Connect to end point
-                client.Connect(point);
-
-                tcpStreams.Add(client.GetStream());               
-            }
+            _endPoints = slavePoints;
+            _masterPoints = masterPoints;
         }
 
         public new int Add(User user)
@@ -47,15 +41,47 @@ namespace Services
 
         private void SendMessage(byte code, User user)
         {
-            foreach(var stream in tcpStreams)
+            if (!_conected)
             {
-                // Send operation code        
-                stream.WriteByte(code);
-
-                // Send serialized user
-                jsonFormatter.WriteObject(stream, user);
+                foreach (var point in _endPoints)
+                {
+                    // Create local point.
+                    TcpClient client = new TcpClient(_masterPoints[0]);
+                    // Connect to end point
+                    client.Connect(point);
+                    tcpClients.Add(client);
+                    _masterPoints.RemoveAt(0);
+                }
+                _conected = true;
             }
             
+            foreach (var client in tcpClients)
+            {
+                _logger.Log(System.Diagnostics.TraceEventType.Information, 
+                    $"Service {Id} send user to point {client.Client.RemoteEndPoint} with code {(char)code}.");
+                var stream = client.GetStream();
+                // Send operation code        
+                stream.WriteByte(code);
+                // Send serialized user
+                jsonFormatter.WriteObject(stream, user);
+                stream.WriteByte((byte)'<');
+                stream.WriteByte((byte)'>');
+                
+            }
+            
+        }
+
+        ~MasterUserService()
+        {
+            foreach(var client in tcpClients)
+            {
+                try
+                {
+                    client?.GetStream()?.Close();
+                    client?.Close();
+                }
+                catch { }
+            }
         }
     }
 }

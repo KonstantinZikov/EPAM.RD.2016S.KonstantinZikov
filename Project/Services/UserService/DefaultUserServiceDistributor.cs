@@ -60,10 +60,10 @@ namespace Services
             return result;
         }
 
-        public virtual void RestoreFromXml(Stream readStream)
-            => _master.RestoreFromXml(readStream);
+        public virtual void Restore(Stream readStream)
+            => _master.Restore(readStream);
 
-        public virtual void SaveToXml(Stream writeStream)
-            => _master.SaveToXml(writeStream);       
+        public virtual void Save(Stream writeStream)
+            => _master.Save(writeStream);       
     }
 }

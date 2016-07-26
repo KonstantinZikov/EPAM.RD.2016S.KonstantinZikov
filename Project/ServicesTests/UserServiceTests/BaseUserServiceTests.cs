@@ -74,7 +74,7 @@ namespace ServicesTests
             var service = GetService(repo);
 
             // Act
-            service.SaveToXml(null);
+            service.Save(null);
 
             // Assert
             Assert.IsTrue(repo.Saved);
@@ -88,7 +88,7 @@ namespace ServicesTests
             var service = GetService(repo);
 
             // Act
-            service.RestoreFromXml(null);
+            service.Restore(null);
 
             // Assert
             Assert.IsTrue(repo.Restored);
@@ -103,7 +103,7 @@ namespace ServicesTests
             var service = GetService(repo);
 
             // Act
-            service.SaveToXml(null);
+            service.Save(null);
 
             // Assert is handled by exception
         }
@@ -117,7 +117,7 @@ namespace ServicesTests
             var service = GetService(repo);
 
             // Act
-            service.RestoreFromXml(null);
+            service.Restore(null);
 
             // Assert is handled by exception
         }

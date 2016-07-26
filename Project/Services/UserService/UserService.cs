@@ -12,10 +12,10 @@ namespace Services
 {
     public class UserService : MarshalByRefObject, IUserService
     {
-        private readonly IUserRepository _repository;
-        private readonly IXmlStorableRepository _storableRepository;
-        private readonly ILogger _logger;
-        private bool _isXmlStorable;
+        protected readonly IUserRepository _repository;
+        protected readonly IXmlStorableRepository _storableRepository;
+        protected readonly ILogger _logger;
+        protected bool _isXmlStorable;
         
         public int Id { get; private set; }
 
@@ -86,7 +86,7 @@ namespace Services
         }
       
 
-        public void SaveToXml(Stream writeStream)
+        public void Save(Stream writeStream)
         {
             _logger.Log(Information, $"Save to xml service {Id}.");
             if (_isXmlStorable)
@@ -110,7 +110,7 @@ namespace Services
             }
         }
 
-        public void RestoreFromXml(Stream readStream)
+        public void Restore(Stream readStream)
         {
             _logger.Log(Information, $"Restore from xml service {Id}.");
             if (_isXmlStorable)
