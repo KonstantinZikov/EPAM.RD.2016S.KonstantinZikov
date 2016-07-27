@@ -1,2 +1,3 @@
-﻿3. add thread-safe
-4. add threads that searches users
+﻿5. style-cop
+6. wcf service
+7. exercise on github

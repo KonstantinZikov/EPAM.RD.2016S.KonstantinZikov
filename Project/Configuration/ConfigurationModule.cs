@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using Utils;
@@ -80,29 +81,31 @@ namespace Configuration
             var assembly = Assembly.Load("Services");
             IUserService master = null;
             List<IUserService> slaves = new List<IUserService>();
-            var ips = new List<IPEndPoint>();
-            foreach (var element in section.Services)
+            var masterPoints = new List<IPEndPoint>();           
+            var pointSection = ConfigurationManager.GetSection("PointsConfig") as PointsConfigSection;
+            foreach(var p in pointSection.MasterPointPool)
             {
-                if (!(element as ServiceElement).IsMaster)
-                {
-                    ips.Add(new IPEndPoint(IPAddress.Parse("127.0.0.1"),
-                        (element as ServiceElement).Port));
-                }
+                var point = p as PointElement;
+                masterPoints.Add(new IPEndPoint(IPAddress.Parse(point.Ip), point.Port));
             }
-            var masterPoints = new List<IPEndPoint>();
-            var portsSection =
-                ConfigurationManager.GetSection("PortsConfig") as PortsConfigSection;
-            foreach(var port in portsSection.Ports)
+            var slavePoints = new Dictionary<int,IPEndPoint>();
+            foreach (var p in pointSection.SlavePoints)
             {
-                masterPoints.Add(new IPEndPoint
-                    (IPAddress.Parse("127.0.0.1"), (port as PortElement).Val));
+                var point = p as PointElement;
+                slavePoints.Add(point.Key,new IPEndPoint(IPAddress.Parse(point.Ip), point.Port));
             }
             foreach (var element in section.Services)
             {              
                 var service = element as ServiceElement;
                 var type = assembly.GetType(service.Type);
-                var port = service.Port;
+                IPEndPoint point = null;
+                if (service.Point != 0)
+                {
+                    point = slavePoints[service.Point];
+                }
                 
+
+                             
                 Rebind(typeof(IUserRepository)).To(_userRepositories[service.Repository]);
 
                 AppDomain domain = AppDomain.CreateDomain($"service{service.Id}");
@@ -119,16 +122,19 @@ namespace Configuration
                 if (service.IsMaster)
                 { 
                     if (master != null)
-                        throw new ConfigurationErrorsException("Two ore more master-services.");         
+                        throw new ConfigurationErrorsException("Two ore more master-services.");
+                    if (point != null)
+                    {
+                        masterPoints.Add(point);
+                    }                   
                     master = domain.CreateInstanceAndUnwrap("Services", "Services.MasterUserService", true,
-                    BindingFlags.CreateInstance, null, new object[] { service.Id, ips, masterPoints, repository, logger},
+                    BindingFlags.CreateInstance, null, new object[] { service.Id, slavePoints.Values.ToList(), masterPoints, repository, logger},
                     CultureInfo.CurrentCulture, new object[0]) as IUserService;
                 }
                 else
                 {
-                    var endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
                     slaves.Add(domain.CreateInstanceAndUnwrap("Services", "Services.SlaveUserService", true,
-                    BindingFlags.CreateInstance, null, new object[] { service.Id, endPoint, repository, logger },
+                    BindingFlags.CreateInstance, null, new object[] { service.Id, point, repository, logger },
                     CultureInfo.CurrentCulture, new object[0]) as IUserService);
                 }
             }

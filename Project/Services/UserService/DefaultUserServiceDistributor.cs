@@ -44,16 +44,16 @@ namespace Services
         }
 
         public virtual int Add(User user)
-            => _master.Add(user);
+            => _master?.Add(user) ?? 0;
 
         public virtual void Delete(User user)
-            => _master.Delete(user);
+            => _master?.Delete(user);
 
         public virtual List<User> Search(params Func<User, bool>[] criterias)
         {
             if (slaveCount == 0)
             {
-                return _master.Search(criterias);
+                return _master?.Search(criterias) ?? new List<User>();
             }
             var result = _slaves[slaveCounter].Search(criterias);
             slaveCounter = (slaveCounter + 1) % _slaves.Count;
@@ -61,9 +61,9 @@ namespace Services
         }
 
         public virtual void Restore(Stream readStream)
-            => _master.Restore(readStream);
+            => _master?.Restore(readStream);
 
         public virtual void Save(Stream writeStream)
-            => _master.Save(writeStream);       
+            => _master?.Save(writeStream);       
     }
 }

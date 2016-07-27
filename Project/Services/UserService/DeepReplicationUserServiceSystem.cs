@@ -13,10 +13,6 @@ namespace Services
             ILogger logger, 
             IUserServiceDistributer distributer):base(distributer)
         {
-            if (master == null)
-                throw new UserServiceException("master is null.");
-            if (slaves == null)
-                throw new UserServiceException("slaves is null.");
             _distributer.Master = master;
             _distributer.Slaves = slaves;
             logger.Log(Information,

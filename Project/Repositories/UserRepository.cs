@@ -16,8 +16,6 @@ namespace Repositories
         private readonly XmlSerializer _serializer;
         private int _generatorMoveCount = 0;     
 
-        // Using of List<> is temporary becose
-        // changing user in external code causes changing it in reposity.
         private List<User> _list;
 
         public UserRepository(IUserValidator validator, IIdGenerator idGenerator)
@@ -112,7 +110,7 @@ namespace Repositories
             catch (InvalidOperationException ex)
             {
                 throw new UserRepositoryException
-                    ("A serialization error" +
+                    ("A serialization error " +
                     "occured while saving repository.", ex);
             }
 
@@ -133,7 +131,7 @@ namespace Repositories
             catch (InvalidOperationException ex)
             {
                 throw new UserRepositoryException
-                    ("A serialization error" +
+                    ("A serialization error " +
                     "occured while restoring repository.", ex);
             }
 

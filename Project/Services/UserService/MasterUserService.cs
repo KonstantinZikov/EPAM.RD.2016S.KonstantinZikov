@@ -13,10 +13,11 @@ namespace Services
 {
     public class MasterUserService : UserService, IUserService
     {
+        private object _lockObj = new object();
         private readonly List<IPEndPoint> _endPoints;
         private readonly List<IPEndPoint> _masterPoints;
         private DataContractJsonSerializer jsonFormatter 
-            = new DataContractJsonSerializer(typeof(User));
+            = new DataContractJsonSerializer(typeof(Message));
         private List<TcpClient> tcpClients = new List<TcpClient>();
         private bool _conected;
         public MasterUserService(int id, List<IPEndPoint> slavePoints, List<IPEndPoint> masterPoints, IUserRepository repository, ILogger logger) 
@@ -29,17 +30,23 @@ namespace Services
         public new int Add(User user)
         {
             int result = base.Add(user);
-            SendMessage((byte)'A', user);
+            lock(_lockObj)
+            {
+                SendMessage(MessageCode.Add, user);
+            }           
             return result;
         }
 
         public new void Delete(User user)
         {
             base.Delete(user);
-            SendMessage((byte)'D', user);
+            lock (_lockObj)
+            {
+                SendMessage(MessageCode.Delete, user);
+            }
         }
 
-        private void SendMessage(byte code, User user)
+        private void SendMessage(MessageCode code, User user)
         {
             if (!_conected)
             {
@@ -58,15 +65,12 @@ namespace Services
             foreach (var client in tcpClients)
             {
                 _logger.Log(System.Diagnostics.TraceEventType.Information, 
-                    $"Service {Id} send user to point {client.Client.RemoteEndPoint} with code {(char)code}.");
+                    $"Service {Id} send user to point {client.Client.RemoteEndPoint} with code {code}.");
                 var stream = client.GetStream();
-                // Send operation code        
-                stream.WriteByte(code);
-                // Send serialized user
-                jsonFormatter.WriteObject(stream, user);
-                stream.WriteByte((byte)'<');
+                Message mes = new Message() { Code = code, User = user };
+                jsonFormatter.WriteObject(stream, mes);
                 stream.WriteByte((byte)'>');
-                
+                stream.WriteByte((byte)'<');
             }
             
         }

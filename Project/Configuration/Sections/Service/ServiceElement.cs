@@ -32,11 +32,11 @@ namespace Configuration
             set { base["repository"] = value; }
         }
 
-        [ConfigurationProperty("port", DefaultValue = "51100", IsKey = false, IsRequired = true)]
-        public int Port
+        [ConfigurationProperty("point", DefaultValue = "0", IsKey = false, IsRequired = false)]
+        public int Point
         {
-            get { return (int)(base["port"]); }
-            set { base["port"] = value; }
+            get { return (int)(base["point"]); }
+            set { base["point"] = value; }
         }
     }
 }

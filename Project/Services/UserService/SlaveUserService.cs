@@ -17,7 +17,7 @@ namespace Services
     {
         private readonly TcpListener _listener;
         private DataContractJsonSerializer jsonFormatter
-            = new DataContractJsonSerializer(typeof(User));
+            = new DataContractJsonSerializer(typeof(Message));
         private CancellationToken _token;
 
 
@@ -41,7 +41,7 @@ namespace Services
                 stream = client.GetStream();
                 List<byte> message = new List<byte>();
                 List<byte> separatedMessage = new List<byte>();
-                byte[] data = new byte[64];
+                byte[] data = new byte[128];
                 while (true)
                 {
                     if (_token.IsCancellationRequested)
@@ -70,20 +70,18 @@ namespace Services
                         }
                         for (int i = 0; i < message.Count; i++)
                         {
-                            if (message[i] == (byte)'<')
+                            if (message[i] == (byte)'>')
                             {
-                                if (message.Count > i + 1 && message[i + 1] == (byte)'>')
+                                if (message.Count > i + 1 && message[i + 1] == (byte)'<')
                                     end = true;
                             }
                         }
                     }
-                    while (!(message.Contains((byte)'<') && message.Contains((byte)'>') && end));
+                    while (!(message.Contains((byte)'>') && message.Contains((byte)'<') && end));
                     if (message.Count > 2)
                     {
-                        var code = (char)message[0];
-                        message.RemoveAt(0);
                         int pos = 0;
-                        while (message[pos] != (byte)'<' || message[pos + 1] != (byte)'>')
+                        while (message[pos] != (byte)'>' || message[pos + 1] != (byte)'<')
                         {
                             separatedMessage.Add(message[pos]);
                             pos++;
@@ -91,19 +89,18 @@ namespace Services
                         message.RemoveRange(0, pos + 2);
                         using (var ms = new MemoryStream(separatedMessage.ToArray()))
                         {
-                            var user = jsonFormatter.ReadObject(ms) as User;
-                            switch (code)
+                            var mes = jsonFormatter.ReadObject(ms) as Message;
+                            switch (mes.Code)
                             {
-                                case 'A':
-                                    Add(user);
+                                case MessageCode.Add:
+                                    Add(mes.User);
                                     break;
-                                case 'D':
-                                    Delete(user);
+                                case MessageCode.Delete:
+                                    Delete(mes.User);
                                     break;
                             }
                         }
-                            
-                        
+                        separatedMessage.Clear();                                  
                     }                    
                 }
             }

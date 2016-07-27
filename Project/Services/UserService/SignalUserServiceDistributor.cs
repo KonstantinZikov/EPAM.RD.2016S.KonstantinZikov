@@ -10,16 +10,16 @@ namespace Services
         public override int Add(User user)
         {
             _logger.Log(Information, 
-                $"Distributer send add signal to master service {_master.Id}.");
-            return _master.Add(user);
+                $"Distributer send add signal to master service {_master?.Id ?? 0}.");
+            return _master?.Add(user) ?? 0;
         }
             
 
         public override void Delete(User user)
         {
             _logger.Log(Information,
-                $"Distributer send delete signal to master service {_master.Id}.");
-            _master.Delete(user);
+                $"Distributer send delete signal to master service {_master?.Id ?? 0}.");
+            _master?.Delete(user);
         }
 
     }

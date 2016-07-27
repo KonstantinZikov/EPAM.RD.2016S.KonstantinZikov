@@ -55,9 +55,9 @@
   <ItemGroup>
     <Compile Include="ConfigurationModule.cs" />
     <Compile Include="Sections\File\FilesCollection.cs" />
-    <Compile Include="Sections\Port\PortCollection.cs" />
-    <Compile Include="Sections\Port\PortElement.cs" />
-    <Compile Include="Sections\Port\PortsConfigSection.cs" />
+    <Compile Include="Sections\Point\PointCollection.cs" />
+    <Compile Include="Sections\Point\PointElement.cs" />
+    <Compile Include="Sections\Point\PointsConfigSection.cs" />
     <Compile Include="Sections\Repository\RepositoryCollection.cs" />
     <Compile Include="Sections\Repository\RepositoryElement.cs" />
     <Compile Include="Sections\Repository\RepositoriesConfigSection.cs" />
