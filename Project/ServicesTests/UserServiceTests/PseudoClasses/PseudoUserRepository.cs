@@ -1,31 +1,33 @@
-﻿using Entities;
-using RepositoryInterfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entities;
+using RepositoryInterfaces;
 
 namespace ServicesTests
 {
-    class PseudoUserRepository : IUserRepository
+    public class PseudoUserRepository : IUserRepository
     {
         public int AddedCount { get; set; }
+
         public int DeletedCount { get; set; }
+
         public int SearchedCount { get; set; }
 
         public int Add(User user)
         {
-            AddedCount++;
+            this.AddedCount++;
             return 0;
         }
 
         public void Delete(User user)
         {
-            DeletedCount++;
+            this.DeletedCount++;
         }
 
         public IQueryable<User> Search(params Func<User, bool>[] criterias)
         {
-            SearchedCount++;
+            this.SearchedCount++;
             return new List<User>().AsQueryable();
         }
     }

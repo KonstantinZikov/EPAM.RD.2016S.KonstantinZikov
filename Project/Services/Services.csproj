@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,7 +46,6 @@
     <Compile Include="UserService\BaseReplicationUserServiceSystem.cs" />
     <Compile Include="UserService\DeepReplicationUserServiceSystem.cs" />
     <Compile Include="UserService\DefaultUserServiceDistributor.cs" />
-    <Compile Include="Obsolete\ReplicationUserServiceSystem.cs" />
     <Compile Include="UserService\MasterUserService.cs" />
     <Compile Include="UserService\Message.cs" />
     <Compile Include="UserService\MessageCode.cs" />

@@ -7,13 +7,13 @@ namespace Configuration
         [ConfigurationProperty("SlavePoints")]
         public PointCollection SlavePoints
         {
-            get { return ((PointCollection)(base["SlavePoints"])); }
+            get { return (PointCollection)base["SlavePoints"]; }
         }
 
         [ConfigurationProperty("MasterPointPool")]
         public PointCollection MasterPointPool
         {
-            get { return ((PointCollection)(base["MasterPointPool"])); }
+            get { return (PointCollection)base["MasterPointPool"]; }
         }
     }
 }

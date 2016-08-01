@@ -1,9 +1,9 @@
-﻿using ServiceInterfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Entities;
 using System.IO;
 using System.Linq;
+using Entities;
+using ServiceInterfaces;
 using Utils;
 
 namespace Services
@@ -13,57 +13,62 @@ namespace Services
         protected readonly ILogger _logger;
         protected IUserService _master;
         protected List<IUserService> _slaves;
-        protected int slaveCounter;
-        protected int slaveCount;
-        public int Id { get; private set; }
-
+        protected int _slaveCounter;
+        protected int _slaveCount;
+        
         public DefaultUserServiceDistributor(ILogger logger)
         {
-            Id = GetHashCode();
-            _logger = logger;
-            logger.Log(System.Diagnostics.TraceEventType.Information,
+            this.Id = GetHashCode();
+            this._logger = logger;
+            logger.Log(
+                System.Diagnostics.TraceEventType.Information,
                 $"UserService distributor {Id} created successfully.");
         }
 
-        
+        public int Id { get; private set; }
 
         public IUserService Master
         {
-            get { return _master; }
-            set { _master = value; }
+            get { return this._master; }
+            set { this._master = value; }
         }
 
         public IEnumerable<IUserService> Slaves
         {
-            get{ return _slaves; }
+            get
+            {
+                return this._slaves;
+            }
+
             set
             {
-                _slaves = value.ToList();
-                slaveCount = _slaves.Count;
+                this._slaves = value.ToList();
+                this._slaveCount = this._slaves.Count;
             }
         }
 
         public virtual int Add(User user)
-            => _master?.Add(user) ?? 0;
+            => this._master?.Add(user) ?? 0;
 
         public virtual void Delete(User user)
-            => _master?.Delete(user);
+            => this._master?.Delete(user);
 
         public virtual List<User> Search(params Func<User, bool>[] criterias)
         {
-            if (slaveCount == 0)
+            if (this._slaveCount == 0)
             {
-                return _master?.Search(criterias) ?? new List<User>();
+                return this._master?.Search(criterias) ?? new List<User>();
             }
-            var result = _slaves[slaveCounter].Search(criterias);
-            slaveCounter = (slaveCounter + 1) % _slaves.Count;
+
+            var result = this._slaves[this._slaveCounter].Search(criterias);
+            this._slaveCounter = (this._slaveCounter + 1) % this._slaves.Count;
             return result;
         }
 
         public virtual void Restore(Stream readStream)
-            => _master?.Restore(readStream);
+            => this._master?.Restore(readStream);
 
         public virtual void Save(Stream writeStream)
-            => _master?.Save(writeStream);       
+            => this._master?.Save(writeStream);       
     }
 }

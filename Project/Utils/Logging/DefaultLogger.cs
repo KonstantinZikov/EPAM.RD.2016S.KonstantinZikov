@@ -12,22 +12,23 @@ namespace Utils
         {
             try
             {
-                source = new TraceSource("Log");
+                this.source = new TraceSource("Log");
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
-                throw new LoggerException("Can't find trace source with name \"Log\"." +
-                    "Check App.config file.", ex);
+                throw new LoggerException(
+                    "Can't find trace source with name \"Log\"." +
+                    "Check App.config file.", 
+                    ex);
             }
         }
 
         public void Log(TraceEventType eventType, string message)
-        {           
-            source.TraceData(eventType, nextId, message);
-            nextId++;
-            source.Flush();
-            source.Close();
-
+        {
+            this.source.TraceData(eventType, this.nextId, message);
+            this.nextId++;
+            this.source.Flush();
+            this.source.Close();
         }
     }
 }

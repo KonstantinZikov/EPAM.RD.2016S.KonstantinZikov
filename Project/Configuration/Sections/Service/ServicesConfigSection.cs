@@ -7,7 +7,7 @@ namespace Configuration
         [ConfigurationProperty("Services")]
         public ServiceCollection Services
         {
-            get { return ((ServiceCollection)(base["Services"])); }
+            get { return (ServiceCollection)base["Services"]; }
         }
     }
 }

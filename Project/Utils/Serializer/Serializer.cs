@@ -10,7 +10,7 @@ namespace Utils
 {
     public static class Serializer
     {
-        private static Dictionary<Type,byte> SimpleTypeCodes = new Dictionary<Type,byte>()
+        private static Dictionary<Type, byte> simpleTypeCodes = new Dictionary<Type, byte>()
         {
             {typeof(byte),      0},
             {typeof(sbyte),     1},         
@@ -33,10 +33,12 @@ namespace Utils
             {
                 throw new ArgumentNullException($"{nameof(graph)} is null");
             }
+
             if (stream == null)
             {
                 throw new ArgumentNullException($"{nameof(stream)} is null");
             }
+
             if (!stream.CanWrite)
             {
                 throw new ArgumentException($"{nameof(stream)} must be writeable.");
@@ -45,19 +47,34 @@ namespace Utils
             SerializeRecursive(graph, stream);
         }
 
+        public static object Deserialize(Stream stream)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException($"{nameof(stream)} is null");
+            }
+
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException($"{nameof(stream)} must be readable.");
+            }
+
+            return DeserializeRecursive(stream);
+        }
+
         private static void SerializeRecursive(object obj, Stream stream)
         {
             if (obj == null)
             {
                 byte[] nullbytes = BitConverter.GetBytes((short)2);
-                stream.Write(nullbytes,0,2);
+                stream.Write(nullbytes, 0, 2);
                 return;
             }
                 
             var type = obj.GetType();
             if (type.GetCustomAttributes(typeof(SerializableAttribute), true).Length > 0)
             {
-                if (SimpleTypeCodes.Keys.Contains(type))
+                if (simpleTypeCodes.Keys.Contains(type))
                 {
                     SerializeSimple(obj, stream);
                 }
@@ -66,7 +83,7 @@ namespace Utils
                     if (type.IsEnum)
                     {                       
                         object underlyingValue = Convert.ChangeType(obj, Enum.GetUnderlyingType(obj.GetType()));
-                        SerializeSimple(underlyingValue,stream);
+                        SerializeSimple(underlyingValue, stream);
                     }
                     else
                     {
@@ -78,11 +95,10 @@ namespace Utils
                             var fieldValue = field.GetValue(obj);
                             SerializeRecursive(fieldValue, stream);
                         }
-                    }
-                    
-                }
-                
+                    }                  
+                }               
             }
+
             if (type.BaseType == typeof(Array))
             {
                 // Value 01 means that type is array.
@@ -94,9 +110,9 @@ namespace Utils
                 int size = (obj as Array).Length;
                 stream.Write(BitConverter.GetBytes(size), 0, 4);
 
-                foreach (var element in (obj as Array))
+                foreach (var element in obj as Array)
                 {
-                    SerializeRecursive(element,stream);
+                    SerializeRecursive(element, stream);
                 }
             }
         }
@@ -106,13 +122,13 @@ namespace Utils
             var type = obj.GetType();
 
             // Two zero bytes means that type is simple.
-            stream.Write(BitConverter.GetBytes((short)0),0,2);
+            stream.Write(BitConverter.GetBytes((short)0), 0, 2);
 
             // Write simple type code
-            stream.WriteByte(SimpleTypeCodes[type]);
+            stream.WriteByte(simpleTypeCodes[type]);
 
             byte[] bytes = new byte[0];
-            switch(type.Name)
+            switch (type.Name)
             {
                 case "Sbyte":
                     bytes = BitConverter.GetBytes((sbyte)obj);
@@ -147,10 +163,11 @@ namespace Utils
                 case "Decimal":
                     int[] bits = decimal.GetBits((decimal)obj);
                     List<byte> byteList = new List<byte>();
-                    foreach(var bitPart in bits)
+                    foreach (var bitPart in bits)
                     {
                         byteList.AddRange(BitConverter.GetBytes(bitPart));
                     }
+
                     bytes = byteList.ToArray();
                     break;
                 case "Boolean":
@@ -163,36 +180,25 @@ namespace Utils
                     bytes = stringBytes.ToArray();
                     break;                   
             }
+
             stream.Write(bytes, 0, bytes.Length);        
         }
-
-        public  static object Deserialize(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException($"{nameof(stream)} is null");
-            }
-            if (!stream.CanRead)
-            {
-                throw new ArgumentException($"{nameof(stream)} must be readable.");
-            }
-
-            return DeserializeRecursive(stream);
-        }
-
+      
         private static object DeserializeRecursive(Stream stream)
         {
             var shortBuffer = new byte[2];
             stream.Read(shortBuffer, 0, 2);
-            var length = BitConverter.ToInt16(shortBuffer,0);
+            var length = BitConverter.ToInt16(shortBuffer, 0);
             if (length == 0)
             {
                 return DeserializeSimple(stream);
             }
+
             if (length == 1)
             {
                 return DeserializeArray(stream);
             }
+
             if (length == 2)
             {
                 return null;
@@ -211,6 +217,7 @@ namespace Utils
                     break;
                 }
             }
+
             if (types.Count() == 0)
             {
                 throw new InvalidOperationException($"Can't find type {typeName} in current assembly.");
@@ -226,16 +233,19 @@ namespace Utils
                 {
                     args.Add(ReadType(stream));
                 }
+
                 type = type.MakeGenericType(args.ToArray());
             }
+
             result = Activator.CreateInstance(type);
             
             var fields = type.GetAllFields();
-            foreach(var field in fields)
+            foreach (var field in fields)
             {
                 var value = DeserializeRecursive(stream);
                 field.SetValue(result, value);
             }
+
             return result;
         }
 
@@ -243,7 +253,7 @@ namespace Utils
         {
             int intCode = stream.ReadByte();
             byte code = (byte)intCode;
-            var type = SimpleTypeCodes.FirstOrDefault(x => x.Value == code).Key;
+            var type = simpleTypeCodes.FirstOrDefault(x => x.Value == code).Key;
             object result = null;
             var buffer = new byte[32];
             switch (type.Name)
@@ -294,11 +304,11 @@ namespace Utils
                     var i3 = BitConverter.ToInt32(buffer, 8);
                     var i4 = BitConverter.ToInt32(buffer, 12);
 
-                    result =  new decimal(new int[] { i1, i2, i3, i4 });
+                    result = new decimal(new int[] { i1, i2, i3, i4 });
                     break;
                 case "Boolean":
                     stream.Read(buffer, 0, 1);
-                    result = BitConverter.ToBoolean(buffer,0);
+                    result = BitConverter.ToBoolean(buffer, 0);
                     break;
                 case "String":
                     stream.Read(buffer, 0, 4);
@@ -308,6 +318,7 @@ namespace Utils
                     result = Encoding.Unicode.GetString(stringBuffer);
                     break;
             }
+
             return result;
         }
 
@@ -319,7 +330,6 @@ namespace Utils
             var typeLength = BitConverter.ToInt16(shortBuffer, 0);
 
             // Read type
-
             var typeBuffer = new byte[typeLength];
             stream.Read(typeBuffer, 0, typeLength);
             string typeName = Encoding.Unicode.GetString(typeBuffer);
@@ -333,15 +343,15 @@ namespace Utils
                     break;
                 }
             }
+
             if (types.Count() == 0)
             {
                 throw new InvalidOperationException($"Can't find type {typeName} in current assembly.");
             }
+
             var type = types.First();
 
-
             // Read Length
-
             var intBuffer = new byte[4];
             stream.Read(intBuffer, 0, 4);
             var length = BitConverter.ToInt32(intBuffer, 0);
@@ -357,7 +367,6 @@ namespace Utils
             }
 
             return arr;
-
         }
 
         private static List<FieldInfo> GetAllFields(this Type type)
@@ -373,11 +382,13 @@ namespace Utils
                     parentTypes.Add(parent);
                     parent = parent.BaseType;
                 }
+
                 foreach (var pt in parentTypes)
                 {
                     fields.AddRange(pt.GetFields(NonPublic | Instance));
                     fields.AddRange(pt.GetFields(Instance));
                 }
+
                 fields = fields.Distinct(new TypeComparer()).ToList();
             }
             else
@@ -385,22 +396,10 @@ namespace Utils
                 fields.AddRange(type.GetFields(NonPublic | Instance));
                 fields.AddRange(type.GetFields(Instance));
             }
+
             return fields;
         }
-
-        class TypeComparer : IEqualityComparer<FieldInfo>
-        {
-            public bool Equals(FieldInfo x, FieldInfo y)
-            {
-                return (x.Name == y.Name);
-            }
-
-            public int GetHashCode(FieldInfo obj)
-            {
-                return 1;
-            }
-        }
-
+       
         private static void WriteTypeName(Type type, Stream stream)
         {
             if (type.IsGenericType && !type.IsGenericTypeDefinition)
@@ -416,6 +415,7 @@ namespace Utils
             else
             {
                 var name = type.FullName;
+
                 // Write type name
                 var typeNameBytes = Encoding.Unicode.GetBytes(name);
 
@@ -447,10 +447,12 @@ namespace Utils
                     break;
                 }
             }
+
             if (types.Count() == 0)
             {
                 throw new InvalidOperationException($"Can't find type {typeName} in current assembly.");
             }
+
             var type = types.First();
 
             if (type.IsGenericTypeDefinition)
@@ -461,10 +463,24 @@ namespace Utils
                 {
                     args.Add(ReadType(stream));
                 }
+
                 type = type.MakeGenericType(args.ToArray());
             }
+
             return type;
         }
 
+        private class TypeComparer : IEqualityComparer<FieldInfo>
+        {
+            public bool Equals(FieldInfo x, FieldInfo y)
+            {
+                return x.Name == y.Name;
+            }
+
+            public int GetHashCode(FieldInfo obj)
+            {
+                return 1;
+            }
+        }
     }
 }

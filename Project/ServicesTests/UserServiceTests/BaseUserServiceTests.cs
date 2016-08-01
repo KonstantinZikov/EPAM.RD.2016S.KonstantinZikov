@@ -8,15 +8,13 @@ using ServiceInterfaces;
 namespace ServicesTests
 {
     public abstract class BaseUserServiceTests
-    {
-        protected abstract IUserService GetService(IUserRepository repository);
-
+    {      
         [TestMethod]
         public void Add_TwentyUsers_RepositoryCallAddTwentyTimes()
         {
             // Arrange
             var repo = new PseudoUserRepository();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             for (int i = 0; i < 20; i++)
@@ -33,7 +31,7 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepository();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
             for (int i = 0; i < 20; i++)
             {
                 service.Add(null);
@@ -54,7 +52,7 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepository();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             for (int i = 0; i < 20; i++)
@@ -71,7 +69,7 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepositoryXml();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             service.Save(null);
@@ -85,7 +83,7 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepositoryXml();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             service.Restore(null);
@@ -100,7 +98,7 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepository();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             service.Save(null);
@@ -114,12 +112,14 @@ namespace ServicesTests
         {
             // Arrange
             var repo = new PseudoUserRepository();
-            var service = GetService(repo);
+            var service = this.GetService(repo);
 
             // Act
             service.Restore(null);
 
             // Assert is handled by exception
         }
+
+        protected abstract IUserService GetService(IUserRepository repository);
     }
 }

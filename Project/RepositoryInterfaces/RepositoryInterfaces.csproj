@@ -40,18 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserRepositoryFactory.cs" />
     <Compile Include="IUserValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="UserRepositoryException.cs" />
     <Compile Include="ValidationException.cs" />
-    <Compile Include="IXmlStorableRepository.cs" />
+    <Compile Include="IStorableRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{d5107fab-58ce-4f7c-96d6-ce7bd97a3701}</Project>
       <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{d3827e37-4a1f-4714-8404-c5f177a0f4f7}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

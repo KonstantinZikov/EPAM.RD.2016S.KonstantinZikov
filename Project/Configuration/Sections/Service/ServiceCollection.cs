@@ -4,7 +4,12 @@ namespace Configuration
 {
     [ConfigurationCollection(typeof(ServiceElement), AddItemName = "Service")]
     public class ServiceCollection : ConfigurationElementCollection
-    {
+    {      
+        public ServiceElement this[int idx]
+        {
+            get { return (ServiceElement)BaseGet(idx); }
+        }
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new ServiceElement();
@@ -13,11 +18,6 @@ namespace Configuration
         protected override object GetElementKey(ConfigurationElement element)
         {
             return ((ServiceElement)element).Id;
-        }
-
-        public ServiceElement this[int idx]
-        {
-            get { return (ServiceElement)BaseGet(idx); }
         }
     }
 }

@@ -2,5 +2,7 @@
 
 namespace Utils
 {
-    public interface IIdGenerator : IEnumerator<int>{}
+    public interface IIdGenerator : IEnumerator<int>
+    {
+    }
 }

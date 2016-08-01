@@ -52,13 +52,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Obsolete\ReplicationUserServiceSystemTests.cs" />
-    <Compile Include="UserServiceTests\DeepReplicationUserServiceSystemTests.cs" />
     <Compile Include="UserServiceTests\PseudoClasses\PseudoUserRepository.cs" />
     <Compile Include="UserServiceTests\PseudoClasses\PseudoUserRepositoryXml.cs" />
     <Compile Include="UserServiceTests\BaseUserServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserServiceTests\PseudoClasses\PseudoUserRepositoryFactory.cs" />
     <Compile Include="UserServiceTests\UserServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

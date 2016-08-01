@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RepositoryInterfaces;
 using ServiceInterfaces;
 using Services;
@@ -12,7 +12,7 @@ namespace ServicesTests
     {
         protected override IUserService GetService(IUserRepository repository)
         {
-            return new UserService(1,repository,new DefaultLogger());
+            return new UserService(1, repository, new DefaultLogger());
         }
     }
 }

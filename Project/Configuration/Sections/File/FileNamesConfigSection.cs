@@ -7,7 +7,7 @@ namespace Configuration
         [ConfigurationProperty("FileNames")]
         public FilesCollection FileItems
         {
-            get { return ((FilesCollection)(base["FileNames"])); }
+            get { return (FilesCollection)base["FileNames"]; }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Utils
         {
             get
             {
-                return last;
+                return this.last;
             }
         }
 
@@ -21,7 +21,7 @@ namespace Utils
         {
             get
             {
-                return Current;
+                return this.Current;
             }
         }
 
@@ -31,8 +31,8 @@ namespace Utils
 
         public bool MoveNext()
         {
-            current = last + current;
-            last = current - last;
+            this.current = this.last + this.current;
+            this.last = this.current - this.last;
             return true;
         }
 

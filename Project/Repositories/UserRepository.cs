@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities;
-using RepositoryInterfaces;
+using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using System.IO;
+using Entities;
+using RepositoryInterfaces;
 using Utils;
 
 namespace Repositories
 {
-    public class UserRepository : MarshalByRefObject, IUserRepository, StorableRepository
+    public class UserRepository : MarshalByRefObject, IUserRepository, IStorableRepository
     {
         private readonly IUserValidator _validator;
         private readonly IEnumerator<int> _idGenerator;
@@ -22,41 +22,42 @@ namespace Repositories
         {
             if (validator == null)
             {
-                throw new ArgumentNullException
-                    (nameof(validator) + " is null.");
+                throw new ArgumentNullException(nameof(validator) + " is null.");
             }
-            _validator = validator;
+
+            this._validator = validator;
 
             if (idGenerator == null)
             {
-                throw new ArgumentNullException
-                    (nameof(idGenerator) + " is null.");
+                throw new ArgumentNullException(nameof(idGenerator) + " is null.");
             }
-            _idGenerator = idGenerator;
 
-            _list = new List<User>();
-            _serializer = new XmlSerializer(typeof(UserRepositoryInfo),
-                new[] { typeof(User), typeof(VisaRecord), typeof(List<User>)});
+            this._idGenerator = idGenerator;
+
+            this._list = new List<User>();
+            this._serializer = new XmlSerializer(
+                typeof(UserRepositoryInfo),
+                new[] { typeof(User), typeof(VisaRecord), typeof(List<User>) });
         }
 
         public int Add(User user)
         {
             if (user == null)
             {
-                throw new ArgumentNullException
-                    (nameof(user) + " is null.");
+                throw new ArgumentNullException(nameof(user) + " is null.");
             }
-            var element = _list.Where((u) => u.Equals(user));
+
+            var element = this._list.Where((u) => u.Equals(user));
             if (element.Count() != 0)
             {
-                throw new UserRepositoryException
-                    ("User already added.");
+                throw new UserRepositoryException("User already added.");
             }
-            _validator.Validate(user);
-            _idGenerator.MoveNext();
-            _generatorMoveCount++;
-            user.Id = _idGenerator.Current;
-            _list.Add(user);
+
+            this._validator.Validate(user);
+            this._idGenerator.MoveNext();
+            this._generatorMoveCount++;
+            user.Id = this._idGenerator.Current;
+            this._list.Add(user);
             return user.Id;
         }
 
@@ -64,27 +65,30 @@ namespace Repositories
         {
             if (user == null)
             {
-                throw new ArgumentNullException
-                    (nameof(user) + " is null.");
+                throw new ArgumentNullException(nameof(user) + " is null.");
             }
-            if (!_list.Remove(user))
+
+            if (!this._list.Remove(user))
             {
-                throw new UserRepositoryException
-                    ("User doesn't exist.");
+                throw new UserRepositoryException("User doesn't exist.");
             }           
         }
 
-        public IQueryable<User> Search(params Func<User,bool>[] criterias)
+        public IQueryable<User> Search(params Func<User, bool>[] criterias)
         {
-            var result = _list.Where((u) =>
+            var result = this._list.Where((u) =>
             {
                 bool selected = true;
                 for (int i = 0; i < criterias.Length; i++)
                 {
                     if (criterias[i] == null)
+                    {
                         throw new ArgumentException("One of criterias is null.");
+                    }
+                        
                     selected &= criterias[i](u);
                 }
+
                 return selected;
             });
             return result.AsQueryable();
@@ -94,26 +98,23 @@ namespace Repositories
         {
             var info = new UserRepositoryInfo()
             {
-                Users = _list,
-                GeneratorMoveNextCount = _generatorMoveCount,
-                GeneratorTypeFullName = _idGenerator.GetType().FullName
+                Users = this._list,
+                GeneratorMoveNextCount = this._generatorMoveCount,
+                GeneratorTypeFullName = this._idGenerator.GetType().FullName
             };
             try
             {
-                Serializer.Serialize(info,writeStream);
+                Serializer.Serialize(info, writeStream);
             }
             catch (IOException ex)
             {
-                throw new UserRepositoryException
-                    ("An IO error occured while saving repository.", ex);
+                throw new UserRepositoryException("An IO error occured while saving repository.", ex);
             }
             catch (InvalidOperationException ex)
             {
-                throw new UserRepositoryException
-                    ("A serialization error " +
-                    "occured while saving repository.", ex);
+                throw new UserRepositoryException(
+                    "A serialization error occured while saving repository.", ex);
             }
-
         }
 
         public void Restore(Stream readStream)
@@ -123,25 +124,23 @@ namespace Repositories
             {
                 info = Serializer.Deserialize(readStream) as UserRepositoryInfo;
             }
-            catch(IOException ex)
+            catch (IOException ex)
             {
-                throw new UserRepositoryException
-                    ("An IO error occured while restoring repository.",ex);
+                throw new UserRepositoryException("An IO error occured while restoring repository.", ex);
             }
             catch (InvalidOperationException ex)
             {
-                throw new UserRepositoryException
-                    ("A serialization error " +
-                    "occured while restoring repository.", ex);
+                throw new UserRepositoryException(
+                    "A serialization error occured while restoring repository.", ex);
             }
 
-            _list = info.Users;
-            _generatorMoveCount = info.GeneratorMoveNextCount;
-            if (_idGenerator.GetType().FullName != info.GeneratorTypeFullName)
+            this._list = info.Users;
+            this._generatorMoveCount = info.GeneratorMoveNextCount;
+            if (this._idGenerator.GetType().FullName != info.GeneratorTypeFullName)
             {
-                throw new UserRepositoryException
-                    ("Type of idGenerator doesn't mutch the" +
-                     " type of generator in saved repository.");
+                throw new UserRepositoryException(
+                    "Type of idGenerator doesn't mutch the" +
+                    " type of generator in saved repository.");
             }
         }
     }

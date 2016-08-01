@@ -1,25 +1,23 @@
 ﻿using System;
+using System.Threading;
+using Configuration;
+using Entities;
 using Ninject;
 using ServiceInterfaces;
-using Entities;
-using Configuration;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Application
 {
-    class Program
+    public class Program
     {
-        static IUserService service;
+        private static IUserService service;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Initialize();
-            //AddUsers();
             Console.ReadKey();
         }
 
-        static void AddUsers()
+        private static void AddUsers()
         {
             for (int i = 0; i < 100; i++)
             {
@@ -32,11 +30,10 @@ namespace Application
                     PersonalId = "1"
                 });
                 Thread.Sleep(200);
-            }
-            
+            }           
         }
 
-        static void Initialize()
+        private static void Initialize()
         {
             IKernel kernel = new StandardKernel(new ConfigurationModule());
             service = kernel.Get<IUserService>();

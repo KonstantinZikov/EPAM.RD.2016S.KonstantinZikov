@@ -7,7 +7,7 @@ namespace Configuration
         [ConfigurationProperty("Repositories")]
         public RepositoryCollection Repositories
         {
-            get { return ((RepositoryCollection)(base["Repositories"])); }
+            get { return (RepositoryCollection)base["Repositories"]; }
         }
     }
 }

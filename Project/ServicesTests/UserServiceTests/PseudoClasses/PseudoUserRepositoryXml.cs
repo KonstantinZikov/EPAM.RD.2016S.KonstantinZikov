@@ -1,21 +1,22 @@
-﻿using RepositoryInterfaces;
-using System.IO;
+﻿using System.IO;
+using RepositoryInterfaces;
 
 namespace ServicesTests
 {
-    class PseudoUserRepositoryXml : PseudoUserRepository, StorableRepository
+    public class PseudoUserRepositoryXml : PseudoUserRepository, IStorableRepository
     {
         public bool Saved { get; set; }
+
         public bool Restored { get; set; }
 
         public void Restore(Stream readStream)
         {
-            Restored = true;
+            this.Restored = true;
         }
 
         public void Save(Stream writeStream)
         {
-            Saved = true;
+            this.Saved = true;
         }
     }
 }

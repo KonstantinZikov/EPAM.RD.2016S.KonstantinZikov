@@ -1,17 +1,16 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RepositoryInterfaces;
 using Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repositories;
-using System.Text.RegularExpressions;
+using RepositoryInterfaces;
 
 namespace RepositoriesTests
 {
     [TestClass]
     public class UserValidatorTests
     {
-        private readonly UserValidator validator 
-            = new UserValidator(new DateTime(2017,1,1), @"\d+");
+        private readonly UserValidator _validator 
+            = new UserValidator(new DateTime(2017, 1, 1), @"\d+");
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
@@ -19,11 +18,10 @@ namespace RepositoriesTests
         {
             // Arrange is skipped
             // Act
-            validator.Validate(null);
+            this._validator.Validate(null);
 
             // Assert is handled by exception
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(ValidationException))]
@@ -33,7 +31,7 @@ namespace RepositoriesTests
             var user = new User();
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -52,7 +50,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -71,7 +69,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -83,7 +81,7 @@ namespace RepositoriesTests
             // Arrange
             var user = new User()
             {
-                FirstName = "",
+                FirstName = string.Empty,
                 LastName = "Pupkin",
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Gender = Gender.Male,
@@ -91,7 +89,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -104,14 +102,14 @@ namespace RepositoriesTests
             var user = new User()
             {
                 FirstName = "Vasya",
-                LastName = "",
+                LastName = string.Empty,
                 DateOfBirth = new DateTime(1990, 1, 1),
                 Gender = Gender.Male,
                 PersonalId = "1",
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -130,7 +128,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -150,7 +148,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -170,7 +168,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is handled by exception
         }
@@ -189,7 +187,7 @@ namespace RepositoriesTests
             };
 
             // Act
-            validator.Validate(user);
+            this._validator.Validate(user);
 
             // Assert is skipped
         }

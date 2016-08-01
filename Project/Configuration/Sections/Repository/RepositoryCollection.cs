@@ -2,9 +2,14 @@
 
 namespace Configuration
 {
-    [ConfigurationCollection(typeof(RepositoryElement),AddItemName = "Repository")]
+    [ConfigurationCollection(typeof(RepositoryElement), AddItemName = "Repository")]
     public class RepositoryCollection : ConfigurationElementCollection
-    {
+    {       
+        public RepositoryElement this[int idx]
+        {
+            get { return (RepositoryElement)BaseGet(idx); }
+        }
+
         protected override ConfigurationElement CreateNewElement()
         {
             return new RepositoryElement();
@@ -13,11 +18,6 @@ namespace Configuration
         protected override object GetElementKey(ConfigurationElement element)
         {
             return ((RepositoryElement)element).Name;
-        }
-
-        public RepositoryElement this[int idx]
-        {
-            get { return (RepositoryElement)BaseGet(idx); }
         }
     }
 }

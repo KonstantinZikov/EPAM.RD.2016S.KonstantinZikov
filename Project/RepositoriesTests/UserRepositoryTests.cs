@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repositories;
-using Entities;
 using RepositoryInterfaces;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
 using Utils;
 
 namespace RepositoriesTests
@@ -14,22 +14,13 @@ namespace RepositoriesTests
     public class UserRepositoryTests
     {
         private readonly string _personalIdRegex = @"\d+";
-        private readonly DateTime maxBirthDate = new DateTime(2017,1,1);
-
-
-        private UserRepository CreateRepository()
-        {
-            var validator = new UserValidator(maxBirthDate, _personalIdRegex);
-            var idGenerator = new FibonacciEnumerator();
-            return new UserRepository(validator, idGenerator);
-        }
-
-
+        private readonly DateTime _maxBirthDate = new DateTime(2017, 1, 1);
+      
         [TestMethod]
         public void Add_SimpleUser_ReturnsGeneratedId()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var idGenerator = new FibonacciEnumerator();
             idGenerator.MoveNext();
 
@@ -55,7 +46,7 @@ namespace RepositoriesTests
         public void Add_InvalidUser_ValidationException()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User();
 
             // Act
@@ -69,7 +60,7 @@ namespace RepositoriesTests
         public void Add_ExistingUser_UserRepositoryException()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User()
             {
                 FirstName = "Vasya",
@@ -91,7 +82,7 @@ namespace RepositoriesTests
         public void Add_UsersWithSameFullNames_UserRepositoryException()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user1 = new User()
             {
                 FirstName = "Vasya",
@@ -109,7 +100,6 @@ namespace RepositoriesTests
                 PersonalId = "12"
             };
 
-
             // Act
             repository.Add(user1);
             repository.Add(user2);
@@ -121,7 +111,7 @@ namespace RepositoriesTests
         public void Add_TwentyDifferentUsers_ReturnsGeneratedId()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var userList = new List<User>();
             for (int i = 0; i < 20; i++)
             {
@@ -139,7 +129,7 @@ namespace RepositoriesTests
             idGenerator.MoveNext();
 
             // Act
-            foreach(var user in userList)
+            foreach (var user in userList)
             {
                 int resultId = repository.Add(user);
                 int expectedId = idGenerator.Current;
@@ -154,10 +144,11 @@ namespace RepositoriesTests
         public void SearchForUsers_SearchNoExistingUser_EmptyCollection()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
 
             // Act
-            var result = repository.Search(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] 
+            {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -170,7 +161,7 @@ namespace RepositoriesTests
         public void SearchForUsers_SearchUserByFirstName_SearchedUser()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User()
             {
                 FirstName = "Vasya",
@@ -182,7 +173,8 @@ namespace RepositoriesTests
             repository.Add(user);
 
             // Act
-            var result = repository.Search(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] 
+            {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -196,7 +188,7 @@ namespace RepositoriesTests
         public void SearchForUsers_SearchUserByFirstAndLastName_SearchedUser()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user1 = new User()
             {
                 FirstName = "Vasya",
@@ -217,7 +209,8 @@ namespace RepositoriesTests
             repository.Add(user2);
 
             // Act
-            var result = repository.Search(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] 
+            {
                 (u) => u.FirstName == "Vasya",
                 (u) => u.LastName == "Pupkin"
             }).ToList();
@@ -233,7 +226,7 @@ namespace RepositoriesTests
         public void Delete_DeleteNotAddedUser_RepositoryException()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User()
             {
                 FirstName = "Vasya",
@@ -253,7 +246,7 @@ namespace RepositoriesTests
         public void Delete_DeleteAddedUser_UserCannotBeFoundBySearchMethod()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User()
             {
                 FirstName = "Vasya",
@@ -266,7 +259,8 @@ namespace RepositoriesTests
             // Act
             repository.Add(user);
             repository.Delete(user);
-            var result = repository.Search(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[] 
+            {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -279,7 +273,7 @@ namespace RepositoriesTests
         public void Delete_DeleteAddedUser_UserCanBeAddedAgain()
         {
             // Arrange 
-            var repository = CreateRepository();
+            var repository = this.CreateRepository();
             var user = new User()
             {
                 FirstName = "Vasya",
@@ -293,7 +287,8 @@ namespace RepositoriesTests
             repository.Add(user);
             repository.Delete(user);
             repository.Add(user);
-            var result = repository.Search(new Func<User, bool>[] {
+            var result = repository.Search(new Func<User, bool>[]
+            {
                 (u) => u.FirstName == "Vasya"
             }).ToList();
 
@@ -311,7 +306,7 @@ namespace RepositoriesTests
             var firstName2 = "Petya";
             using (var stream = new MemoryStream())
             {
-                var repository = CreateRepository();
+                var repository = this.CreateRepository();
                 var user1 = new User()
                 {
                     FirstName = firstName1,
@@ -337,12 +332,20 @@ namespace RepositoriesTests
                 repository.Restore(stream);
                 var restored1 = repository.Search((u) => u.FirstName == firstName1).ToList();
                 var restored2 = repository.Search((u) => u.FirstName == firstName2).ToList();
+
                 // Assert        
                 Assert.AreEqual(1, restored1.Count);   
                 Assert.AreEqual(user1, restored1[0]);
                 Assert.AreEqual(1, restored2.Count);
                 Assert.AreEqual(user2, restored2[0]);
             }           
+        }
+
+        private UserRepository CreateRepository()
+        {
+            var validator = new UserValidator(this._maxBirthDate, this._personalIdRegex);
+            var idGenerator = new FibonacciEnumerator();
+            return new UserRepository(validator, idGenerator);
         }
     }
 }

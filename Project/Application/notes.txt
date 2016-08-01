@@ -1,3 +1,1 @@
-﻿5. style-cop
-6. wcf service
-7. exercise on github
+﻿7. exercise on github

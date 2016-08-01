@@ -1,5 +1,5 @@
-﻿using Entities;
-using System;
+﻿using System;
+using Entities;
 
 namespace Services
 {
@@ -7,6 +7,7 @@ namespace Services
     public class Message
     {
         public MessageCode Code { get; set; }
+
         public User User { get; set; }
     }
 }
