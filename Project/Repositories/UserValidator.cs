@@ -5,11 +5,28 @@ using RepositoryInterfaces;
 
 namespace Repositories
 {
+    /// <summary>
+    /// Default class for User's validating.
+    /// User isn't valid in next cases:
+    ///    <para>--User is null.</para> 
+    ///    <para>--User's first name is null or empty.</para> 
+    ///    <para>--User's last name is null or empty.</para> 
+    ///    <para>--User's birth date greater than maxBirthDate.</para> 
+    ///    <para>--User's PersonalId is null or doesn't mutch the personalIdRegex.</para> 
+    /// </summary>
     public class UserValidator : MarshalByRefObject, IUserValidator
     {
         private readonly Regex _personalIdRegex;
         private readonly DateTime _maxBirthDate;
 
+        /// <summary>
+        /// Initialize validator.
+        /// </summary>
+        /// <param name="maxBirthDate">Max birth date of user. If user's birth date is greater than maxBirthDate,
+        /// Validation exception will be occured.</param>
+        /// <param name="personalIdRegex">Regex for users property "PersonalId" in string form. If user's PersonalId doesn't mutch it,
+        /// Validation exception will be occured. Symbols '^' and '$' before and after regex are unneccessary.
+        /// Default value is ".*" (any value of PersonalId is valid).</param>
         public UserValidator(DateTime maxBirthDate, string personalIdRegex = ".*")
         {
             if (string.IsNullOrEmpty(personalIdRegex))
@@ -29,6 +46,11 @@ namespace Repositories
             this._maxBirthDate = maxBirthDate;
         }
 
+        /// <summary>
+        /// Validate selected user. If user is valid, do nothing. Else throws ValidationException.
+        /// </summary>
+        /// <param name="user">User for validating.</param>
+        /// <exception cref="ValidationException">User isn't valid.</exception>
         public void Validate(User user)
         {
             if (user == null)

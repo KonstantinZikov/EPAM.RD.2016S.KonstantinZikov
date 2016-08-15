@@ -9,6 +9,10 @@ using Utils;
 
 namespace Repositories
 {
+
+    /// <summary>
+    /// Simple class for storing User entities. Use IUserValidator object for validating and IIdGenerator for generating id's.
+    /// </summary>
     public class UserRepository : MarshalByRefObject, IUserRepository, IStorableRepository
     {
         private readonly IUserValidator _validator;
@@ -40,6 +44,14 @@ namespace Repositories
                 new[] { typeof(User), typeof(VisaRecord), typeof(List<User>) });
         }
 
+        /// <summary>
+        /// Add user to internal collection. 
+        /// User's field "Id" will be ignored and changed to generated value.
+        /// </summary>
+        /// <param name="user">Adding user.</param>
+        /// <returns>Generated id.</returns>
+        /// <exception cref="ArgumentNullException">User is null.</exception>
+        /// <exception cref="UserRepositoryException">Collection already contains selected user.</exception>
         public int Add(User user)
         {
             if (user == null)
@@ -61,6 +73,12 @@ namespace Repositories
             return user.Id;
         }
 
+        /// <summary>
+        /// Search selected user in collection and try to delete it;
+        /// </summary>
+        /// <param name="user">Deleting user.</param>
+        /// <exception cref="ArgumentNullException">User is null.</exception>
+        /// <exception cref="UserRepositoryException">Collection doesn't contains user.</exception>
         public void Delete(User user)
         {
             if (user == null)
@@ -74,6 +92,11 @@ namespace Repositories
             }           
         }
 
+        /// <summary>
+        /// Search users by selected criterias;
+        /// </summary>
+        /// <param name="criterias">Array of criterias for search</param>
+        /// <exception cref="ArgumentException">One of criterias is null.</exception>
         public IQueryable<User> Search(params Func<User, bool>[] criterias)
         {
             var result = this._list.Where((u) =>
@@ -94,8 +117,19 @@ namespace Repositories
             return result.AsQueryable();
         }
 
+        /// <summary>
+        /// Serialize storage and write it to selected stream. 
+        /// </summary>
+        /// <param name="writeStream">Stream to write.</param>
+        /// <exception cref="ArgumentException">writeStream isn't writeable.</exception>
+        /// <exception cref="UserRepositoryException">Throws when Input/Output or serialization errors are occured.</exception>
         public void Save(Stream writeStream)
         {
+            if (writeStream.CanWrite == false)
+            {
+                throw new ArgumentException($"{nameof(writeStream)} must be writeable.");
+            }
+
             var info = new UserRepositoryInfo()
             {
                 Users = this._list,
@@ -108,17 +142,30 @@ namespace Repositories
             }
             catch (IOException ex)
             {
-                throw new UserRepositoryException("An IO error occured while saving repository.", ex);
+                throw new UserRepositoryException("An IO error is occured while saving repository.", ex);
             }
             catch (InvalidOperationException ex)
             {
                 throw new UserRepositoryException(
-                    "A serialization error occured while saving repository.", ex);
+                    "A serialization error is occured while saving repository.", ex);
             }
         }
 
+        /// <summary>
+        /// Deserialize storage from the selected stream. 
+        /// All data which was added before deserializing will be lost.
+        /// </summary>
+        /// <param name="readStream">Stream to read.</param>
+        /// <exception cref="ArgumentException">readStream isn't readable.</exception>
+        /// <exception cref="UserRepositoryException">Throws when Input/Output or serialization errors are occured,
+        /// or when type of id generator of deserialized repository doesn't mutch to the current type.</exception>
         public void Restore(Stream readStream)
         {
+            if (readStream.CanRead == false)
+            {
+                throw new ArgumentException($"{nameof(readStream)} must be readable.");
+            }
+
             UserRepositoryInfo info;
             try
             {
