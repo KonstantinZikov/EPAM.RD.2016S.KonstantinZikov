@@ -6,6 +6,10 @@ using ServiceInterfaces;
 
 namespace Services
 {
+    /// <summary>
+    /// Gives ability to include distributing logic in UserService system
+    /// and projects IWcfUserService's search methods to one IUserService search method.
+    /// </summary>
     public abstract class BaseReplicationUserServiceSystem : IWcfUserService
     {         
         public BaseReplicationUserServiceSystem(IUserServiceDistributer distributer)

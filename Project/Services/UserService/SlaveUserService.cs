@@ -12,6 +12,9 @@ using Utils;
 
 namespace Services
 {
+    /// <summary>
+    /// UserService which can accept messages from external source with TCP connection.
+    /// </summary>
     public class SlaveUserService : UserService
     {
         private readonly TcpListener _listener;
@@ -30,7 +33,7 @@ namespace Services
             a.Start();
         }
 
-        public void AcceptMessages()
+        private void AcceptMessages()
         {
             this._listener.Start();
             TcpClient client = this._listener.AcceptTcpClient();          

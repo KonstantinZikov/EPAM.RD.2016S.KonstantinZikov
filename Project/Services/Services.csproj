@@ -49,7 +49,6 @@
     <Compile Include="UserService\MasterUserService.cs" />
     <Compile Include="UserService\Message.cs" />
     <Compile Include="UserService\MessageCode.cs" />
-    <Compile Include="UserService\SignalUserServiceDistributor.cs" />
     <Compile Include="UserService\SlaveUserService.cs" />
     <Compile Include="UserService\UserService.cs" />
   </ItemGroup>

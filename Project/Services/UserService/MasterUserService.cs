@@ -9,6 +9,10 @@ using Utils;
 
 namespace Services
 {
+
+    /// <summary>
+    /// UserService which can send messages to another services with TCP connection
+    /// </summary>
     public class MasterUserService : UserService, IUserService
     {
         private readonly object _lockObj = new object();

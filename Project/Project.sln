@@ -29,6 +29,120 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{0528F63D-6120-4D5F-AAAA-2485B3185885}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EXAMPLE", "EXAMPLE", "{D70A652C-A037-4C25-A7B5-46914CE6480E}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLE\readme.txt = EXAMPLE\readme.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MASTER-HOST", "MASTER-HOST", "{4949BC80-40FD-45AA-B813-FB1DBF2E810E}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLE\MASTER-HOST\Configuration.dll = EXAMPLE\MASTER-HOST\Configuration.dll
+		EXAMPLE\MASTER-HOST\Configuration.pdb = EXAMPLE\MASTER-HOST\Configuration.pdb
+		EXAMPLE\MASTER-HOST\Entities.dll = EXAMPLE\MASTER-HOST\Entities.dll
+		EXAMPLE\MASTER-HOST\Entities.pdb = EXAMPLE\MASTER-HOST\Entities.pdb
+		EXAMPLE\MASTER-HOST\EntitiesTests.dll = EXAMPLE\MASTER-HOST\EntitiesTests.dll
+		EXAMPLE\MASTER-HOST\EntitiesTests.pdb = EXAMPLE\MASTER-HOST\EntitiesTests.pdb
+		EXAMPLE\MASTER-HOST\Host.exe = EXAMPLE\MASTER-HOST\Host.exe
+		EXAMPLE\MASTER-HOST\Host.exe.config = EXAMPLE\MASTER-HOST\Host.exe.config
+		EXAMPLE\MASTER-HOST\Host.pdb = EXAMPLE\MASTER-HOST\Host.pdb
+		EXAMPLE\MASTER-HOST\Host.vshost.exe = EXAMPLE\MASTER-HOST\Host.vshost.exe
+		EXAMPLE\MASTER-HOST\Host.vshost.exe.config = EXAMPLE\MASTER-HOST\Host.vshost.exe.config
+		EXAMPLE\MASTER-HOST\Host.vshost.exe.manifest = EXAMPLE\MASTER-HOST\Host.vshost.exe.manifest
+		EXAMPLE\MASTER-HOST\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll = EXAMPLE\MASTER-HOST\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+		EXAMPLE\MASTER-HOST\Ninject.dll = EXAMPLE\MASTER-HOST\Ninject.dll
+		EXAMPLE\MASTER-HOST\Ninject.xml = EXAMPLE\MASTER-HOST\Ninject.xml
+		EXAMPLE\MASTER-HOST\Repositories.dll = EXAMPLE\MASTER-HOST\Repositories.dll
+		EXAMPLE\MASTER-HOST\Repositories.pdb = EXAMPLE\MASTER-HOST\Repositories.pdb
+		EXAMPLE\MASTER-HOST\RepositoriesTests.dll = EXAMPLE\MASTER-HOST\RepositoriesTests.dll
+		EXAMPLE\MASTER-HOST\RepositoriesTests.pdb = EXAMPLE\MASTER-HOST\RepositoriesTests.pdb
+		EXAMPLE\MASTER-HOST\RepositoryInterfaces.dll = EXAMPLE\MASTER-HOST\RepositoryInterfaces.dll
+		EXAMPLE\MASTER-HOST\RepositoryInterfaces.pdb = EXAMPLE\MASTER-HOST\RepositoryInterfaces.pdb
+		EXAMPLE\MASTER-HOST\ServiceInterfaces.dll = EXAMPLE\MASTER-HOST\ServiceInterfaces.dll
+		EXAMPLE\MASTER-HOST\ServiceInterfaces.pdb = EXAMPLE\MASTER-HOST\ServiceInterfaces.pdb
+		EXAMPLE\MASTER-HOST\Services.dll = EXAMPLE\MASTER-HOST\Services.dll
+		EXAMPLE\MASTER-HOST\Services.pdb = EXAMPLE\MASTER-HOST\Services.pdb
+		EXAMPLE\MASTER-HOST\ServicesTests.dll = EXAMPLE\MASTER-HOST\ServicesTests.dll
+		EXAMPLE\MASTER-HOST\ServicesTests.pdb = EXAMPLE\MASTER-HOST\ServicesTests.pdb
+		EXAMPLE\MASTER-HOST\Utils.dll = EXAMPLE\MASTER-HOST\Utils.dll
+		EXAMPLE\MASTER-HOST\Utils.pdb = EXAMPLE\MASTER-HOST\Utils.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SLAVE1", "SLAVE1", "{062C103E-8095-40BB-9591-68F1D95396A6}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLE\SLAVE1\Application.exe = EXAMPLE\SLAVE1\Application.exe
+		EXAMPLE\SLAVE1\Application.exe.config = EXAMPLE\SLAVE1\Application.exe.config
+		EXAMPLE\SLAVE1\Application.pdb = EXAMPLE\SLAVE1\Application.pdb
+		EXAMPLE\SLAVE1\Application.vshost.exe = EXAMPLE\SLAVE1\Application.vshost.exe
+		EXAMPLE\SLAVE1\Application.vshost.exe.config = EXAMPLE\SLAVE1\Application.vshost.exe.config
+		EXAMPLE\SLAVE1\Application.vshost.exe.manifest = EXAMPLE\SLAVE1\Application.vshost.exe.manifest
+		EXAMPLE\SLAVE1\Castle.Core.dll = EXAMPLE\SLAVE1\Castle.Core.dll
+		EXAMPLE\SLAVE1\Castle.Core.xml = EXAMPLE\SLAVE1\Castle.Core.xml
+		EXAMPLE\SLAVE1\Configuration.dll = EXAMPLE\SLAVE1\Configuration.dll
+		EXAMPLE\SLAVE1\Configuration.pdb = EXAMPLE\SLAVE1\Configuration.pdb
+		EXAMPLE\SLAVE1\Entities.dll = EXAMPLE\SLAVE1\Entities.dll
+		EXAMPLE\SLAVE1\Entities.pdb = EXAMPLE\SLAVE1\Entities.pdb
+		EXAMPLE\SLAVE1\myListener.log = EXAMPLE\SLAVE1\myListener.log
+		EXAMPLE\SLAVE1\Ninject.dll = EXAMPLE\SLAVE1\Ninject.dll
+		EXAMPLE\SLAVE1\Ninject.Extensions.Factory.dll = EXAMPLE\SLAVE1\Ninject.Extensions.Factory.dll
+		EXAMPLE\SLAVE1\Ninject.Extensions.Factory.xml = EXAMPLE\SLAVE1\Ninject.Extensions.Factory.xml
+		EXAMPLE\SLAVE1\Ninject.Extensions.Interception.dll = EXAMPLE\SLAVE1\Ninject.Extensions.Interception.dll
+		EXAMPLE\SLAVE1\Ninject.Extensions.Interception.DynamicProxy.dll = EXAMPLE\SLAVE1\Ninject.Extensions.Interception.DynamicProxy.dll
+		EXAMPLE\SLAVE1\Ninject.Extensions.Interception.DynamicProxy.xml = EXAMPLE\SLAVE1\Ninject.Extensions.Interception.DynamicProxy.xml
+		EXAMPLE\SLAVE1\Ninject.Extensions.Interception.xml = EXAMPLE\SLAVE1\Ninject.Extensions.Interception.xml
+		EXAMPLE\SLAVE1\Ninject.xml = EXAMPLE\SLAVE1\Ninject.xml
+		EXAMPLE\SLAVE1\Repositories.dll = EXAMPLE\SLAVE1\Repositories.dll
+		EXAMPLE\SLAVE1\Repositories.pdb = EXAMPLE\SLAVE1\Repositories.pdb
+		EXAMPLE\SLAVE1\RepositoryInterfaces.dll = EXAMPLE\SLAVE1\RepositoryInterfaces.dll
+		EXAMPLE\SLAVE1\RepositoryInterfaces.pdb = EXAMPLE\SLAVE1\RepositoryInterfaces.pdb
+		EXAMPLE\SLAVE1\ServiceInterfaces.dll = EXAMPLE\SLAVE1\ServiceInterfaces.dll
+		EXAMPLE\SLAVE1\ServiceInterfaces.pdb = EXAMPLE\SLAVE1\ServiceInterfaces.pdb
+		EXAMPLE\SLAVE1\Services.dll = EXAMPLE\SLAVE1\Services.dll
+		EXAMPLE\SLAVE1\Services.pdb = EXAMPLE\SLAVE1\Services.pdb
+		EXAMPLE\SLAVE1\Utils.dll = EXAMPLE\SLAVE1\Utils.dll
+		EXAMPLE\SLAVE1\Utils.pdb = EXAMPLE\SLAVE1\Utils.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SLAVE2", "SLAVE2", "{DF74B500-0676-48D7-BC44-068B29004714}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLE\SLAVE2\Application.exe = EXAMPLE\SLAVE2\Application.exe
+		EXAMPLE\SLAVE2\Application.exe.config = EXAMPLE\SLAVE2\Application.exe.config
+		EXAMPLE\SLAVE2\Application.pdb = EXAMPLE\SLAVE2\Application.pdb
+		EXAMPLE\SLAVE2\Application.vshost.exe = EXAMPLE\SLAVE2\Application.vshost.exe
+		EXAMPLE\SLAVE2\Application.vshost.exe.config = EXAMPLE\SLAVE2\Application.vshost.exe.config
+		EXAMPLE\SLAVE2\Application.vshost.exe.manifest = EXAMPLE\SLAVE2\Application.vshost.exe.manifest
+		EXAMPLE\SLAVE2\Castle.Core.dll = EXAMPLE\SLAVE2\Castle.Core.dll
+		EXAMPLE\SLAVE2\Castle.Core.xml = EXAMPLE\SLAVE2\Castle.Core.xml
+		EXAMPLE\SLAVE2\Configuration.dll = EXAMPLE\SLAVE2\Configuration.dll
+		EXAMPLE\SLAVE2\Configuration.pdb = EXAMPLE\SLAVE2\Configuration.pdb
+		EXAMPLE\SLAVE2\Entities.dll = EXAMPLE\SLAVE2\Entities.dll
+		EXAMPLE\SLAVE2\Entities.pdb = EXAMPLE\SLAVE2\Entities.pdb
+		EXAMPLE\SLAVE2\myListener.log = EXAMPLE\SLAVE2\myListener.log
+		EXAMPLE\SLAVE2\Ninject.dll = EXAMPLE\SLAVE2\Ninject.dll
+		EXAMPLE\SLAVE2\Ninject.Extensions.Factory.dll = EXAMPLE\SLAVE2\Ninject.Extensions.Factory.dll
+		EXAMPLE\SLAVE2\Ninject.Extensions.Factory.xml = EXAMPLE\SLAVE2\Ninject.Extensions.Factory.xml
+		EXAMPLE\SLAVE2\Ninject.Extensions.Interception.dll = EXAMPLE\SLAVE2\Ninject.Extensions.Interception.dll
+		EXAMPLE\SLAVE2\Ninject.Extensions.Interception.DynamicProxy.dll = EXAMPLE\SLAVE2\Ninject.Extensions.Interception.DynamicProxy.dll
+		EXAMPLE\SLAVE2\Ninject.Extensions.Interception.DynamicProxy.xml = EXAMPLE\SLAVE2\Ninject.Extensions.Interception.DynamicProxy.xml
+		EXAMPLE\SLAVE2\Ninject.Extensions.Interception.xml = EXAMPLE\SLAVE2\Ninject.Extensions.Interception.xml
+		EXAMPLE\SLAVE2\Ninject.xml = EXAMPLE\SLAVE2\Ninject.xml
+		EXAMPLE\SLAVE2\Repositories.dll = EXAMPLE\SLAVE2\Repositories.dll
+		EXAMPLE\SLAVE2\Repositories.pdb = EXAMPLE\SLAVE2\Repositories.pdb
+		EXAMPLE\SLAVE2\RepositoryInterfaces.dll = EXAMPLE\SLAVE2\RepositoryInterfaces.dll
+		EXAMPLE\SLAVE2\RepositoryInterfaces.pdb = EXAMPLE\SLAVE2\RepositoryInterfaces.pdb
+		EXAMPLE\SLAVE2\ServiceInterfaces.dll = EXAMPLE\SLAVE2\ServiceInterfaces.dll
+		EXAMPLE\SLAVE2\ServiceInterfaces.pdb = EXAMPLE\SLAVE2\ServiceInterfaces.pdb
+		EXAMPLE\SLAVE2\Services.dll = EXAMPLE\SLAVE2\Services.dll
+		EXAMPLE\SLAVE2\Services.pdb = EXAMPLE\SLAVE2\Services.pdb
+		EXAMPLE\SLAVE2\Utils.dll = EXAMPLE\SLAVE2\Utils.dll
+		EXAMPLE\SLAVE2\Utils.pdb = EXAMPLE\SLAVE2\Utils.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLIENT", "CLIENT", "{CB4E830E-0AD3-4140-B2BB-5EEE8E14B589}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLE\CLIENT\Client.exe = EXAMPLE\CLIENT\Client.exe
+		EXAMPLE\CLIENT\Client.exe.config = EXAMPLE\CLIENT\Client.exe.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,5 +204,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4949BC80-40FD-45AA-B813-FB1DBF2E810E} = {D70A652C-A037-4C25-A7B5-46914CE6480E}
+		{062C103E-8095-40BB-9591-68F1D95396A6} = {D70A652C-A037-4C25-A7B5-46914CE6480E}
+		{DF74B500-0676-48D7-BC44-068B29004714} = {D70A652C-A037-4C25-A7B5-46914CE6480E}
+		{CB4E830E-0AD3-4140-B2BB-5EEE8E14B589} = {D70A652C-A037-4C25-A7B5-46914CE6480E}
 	EndGlobalSection
 EndGlobal

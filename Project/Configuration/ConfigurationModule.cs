@@ -63,7 +63,7 @@ namespace Configuration
 
         private void ConfigureServices()
         {         
-            Bind<IUserServiceDistributer>().To<SignalUserServiceDistributor>();
+            Bind<IUserServiceDistributer>().To<DefaultUserServiceDistributor>();
             this.ConfigureReplicator();
         }
 

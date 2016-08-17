@@ -6,6 +6,9 @@ using static System.Diagnostics.TraceEventType;
 
 namespace Services
 {
+    /// <summary>
+    /// Incapsulate master-slave logic.
+    /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class DeepReplicationUserServiceSystem : BaseReplicationUserServiceSystem
     {

@@ -8,6 +8,10 @@ using static System.Reflection.BindingFlags;
 
 namespace Utils
 {
+    /// <summary>
+    /// Binary serializer. Can serialize/deserialize not-cicled object graphs.
+    /// About data format: https://github.com/KonstantinZikov/CustomSerializer
+    /// </summary>
     public static class Serializer
     {
         private static Dictionary<Type, byte> simpleTypeCodes = new Dictionary<Type, byte>()
@@ -27,6 +31,12 @@ namespace Utils
             {typeof(string),    12},
         };
 
+
+        /// <summary>
+        /// Serialize selected object graph to binary view and write it to selected stream.
+        /// </summary>
+        /// <param name="graph">Graph for serializing. Must be not-cicled.</param>
+        /// <param name="stream">Target stream. Must be writable.</param>
         public static void Serialize(object graph, Stream stream)
         {
             if (graph == null)
@@ -47,6 +57,12 @@ namespace Utils
             SerializeRecursive(graph, stream);
         }
 
+        /// <summary>
+        /// Deserialize selected object graph from selected stream. All graph-object's types
+        /// must be loaded to assembly before start of deserializing.
+        /// </summary>
+        /// <param name="stream">Target stream. Must be readable.</param>
+        /// <returns>Deserialized  object graph.</returns>
         public static object Deserialize(Stream stream)
         {
             if (stream == null)

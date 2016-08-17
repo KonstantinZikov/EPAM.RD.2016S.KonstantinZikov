@@ -5,9 +5,14 @@ using System.Linq;
 using Entities;
 using ServiceInterfaces;
 using Utils;
+using static System.Diagnostics.TraceEventType;
 
 namespace Services
 {
+    /// <summary>
+    /// Distribute Add/Delete/Search operations between masters and slaves.
+    /// If Master or slaves aren't selected, operations are suppressed.
+    /// </summary>
     public class DefaultUserServiceDistributor : IUserServiceDistributer
     {
         protected readonly ILogger _logger;
@@ -42,17 +47,50 @@ namespace Services
 
             set
             {
-                this._slaves = value.ToList();
-                this._slaveCount = this._slaves.Count;
+                if (value == null)
+                {
+                    this._slaves = new List<IUserService>();
+                    this._slaveCount = 0;
+                }
+                else
+                {
+                    this._slaves = value.ToList();
+                    this._slaveCount = this._slaves.Count;
+                }               
             }
         }
 
+        /// <summary>
+        /// Call master's add method. If master isn't selected, operation is suppressed.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public virtual int Add(User user)
-            => this._master?.Add(user) ?? 0;
+        {
+            _logger.Log(
+                Information,
+                $"Distributer send add signal to master service {_master?.Id ?? 0}.");
+            return _master?.Add(user) ?? 0;
+        }
 
+        /// <summary>
+        /// Call master's delete method. If master isn't selected, operation is suppressed.
+        /// </summary>
+        /// <param name="user"></param>
         public virtual void Delete(User user)
-            => this._master?.Delete(user);
+        {
+            _logger.Log(
+                Information,
+                $"Distributer send delete signal to master service {_master?.Id ?? 0}.");
+            _master?.Delete(user);
+        }
 
+        /// <summary>
+        /// Distribute search operation between slaves. If slaves aren't selected, operation
+        /// will called on master. In this case, if master isn't selected, operation is suppressed.
+        /// </summary>
+        /// <param name="criterias"></param>
+        /// <returns></returns>
         public virtual List<User> Search(params Func<User, bool>[] criterias)
         {
             if (this._slaveCount == 0)

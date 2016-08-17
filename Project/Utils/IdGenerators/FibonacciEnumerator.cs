@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Utils
 {
+    /// <summary>
+    /// Generates id's by using fibonacci sequence. Sequence: {1,2,3,5,8...}
+    /// </summary>
     public class FibonacciEnumerator : MarshalByRefObject, IIdGenerator
     {
         private int current = 1;

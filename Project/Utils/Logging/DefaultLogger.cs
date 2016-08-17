@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace Utils
 {
+    /// <summary>
+    /// Simple logger. Search trace source with name "log" in app.config and use it as an output.
+    /// </summary>
     public class DefaultLogger : MarshalByRefObject, ILogger
     {
         private readonly TraceSource source;
